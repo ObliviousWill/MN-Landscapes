@@ -19,45 +19,33 @@ rather than a bare hamburger, before/after as two large buttons rather than a
 drag handle, and a persistent call/quote bar on mobile.
 
 The one technical flourish is the canvas-drawn CAD garden plan in the design
-section. In-house drawings are a real differentiator against a
-man-with-a-van, and no competitor in the area shows them.
+section. In-house drawings are a genuine differentiator, and no competitor in
+the area shows them.
 
-## Content provenance
+The site is design-and-build throughout: no maintenance offer, and copy
+written as claims about the business rather than about individuals.
 
-Copy, project write-ups, accreditations, reviews and contact details were
-reconstructed from public sources (mnlandscapes.co.uk, Companies House,
-Pavestone, Facebook). No prices are invented anywhere.
+## To take this live
 
-Much of that public material predates the change of ownership: the founders
-sold the business to Chris. MN Horticulture is not his, and the business does
-not do maintenance — design and build only. All copy is therefore written as
-a claim about the business rather than about any individual.
+1. **Photography.** Every image slot is a textured "material plate" tagged
+   with what belongs there (`Photo 01` … `Photo 10`, including a portrait of
+   the owner). Swap each `<div class="plate …">` for an `<img>`; the aspect
+   ratios are already set. This is the most important outstanding item — on a
+   landscaping site the photographs *are* the product.
+2. **Guide prices.** "What does a patio cost" is the question most visitors
+   arrive with, and not answering it is the biggest conversion leak on almost
+   every landscaper site. Honest price bands would outperform every other
+   change to this page.
+3. **Form handling.** The submit handler is a client-side demo. Point it at
+   an email or CRM endpoint and keep the thank-you state.
+4. **Confirm before launch.** Review attributions, phone number,
+   accreditations and the email address (`chris@mnlandscapes.com` sits on a
+   different domain to the website — worth moving to `.co.uk` for trust).
+   Two lines are proposals rather than reported fact: handing over the
+   planting plan at the end, and offering to suggest a local gardener.
 
-## What still needs the client
-
-- **Photography.** Every image slot is a textured "material plate" tagged
-  with what belongs there (`Photo 01` … `Photo 10`, including a portrait of
-  Chris). Swap each `<div class="plate …">` for an `<img>`; the aspect ratios
-  are already set. This is the single most important outstanding item — on a
-  landscaping site the photographs *are* the product.
-- **Guide prices.** "What does a patio cost" is the question every visitor
-  arrives with. Refusing to answer it is the biggest conversion leak on
-  almost every landscaper site. Honest bands would beat every other change
-  on this page.
-- **Confirm the accreditations** still stand in the current company's name.
-  APL, BALI and TrustMark all police their marks, and the limited company
-  behind the business dates from 2023. The claims come from the live site but
-  predate the sale.
-- **Two proposed promises need his agreement.** The page says he hands over
-  the planting plan at the end, and that he'll suggest a local gardener if
-  asked. Both are nearly free for an outfit already drawing planting plans,
-  and both are good differentiators — but they are proposals, not things he
-  has said he does.
-- **Confirm** the review attributions, the phone number, and the email
-  address (`chris@mnlandscapes.com` sits on a different domain to the
-  website — worth moving to `.co.uk` for trust).
-- **Form handling.** The submit handler is a client-side demo. Point it at an
-  email/CRM endpoint and keep the thank-you state.
+Copy, project write-ups and contact details were reconstructed from public
+sources. No prices are invented anywhere.
 
 ## Site architecture this page assumes
 
@@ -70,15 +58,15 @@ persistent call/quote bar so the form is always one tap away.
 |---|---|
 | Home | This page. Establish trust, show the work, capture the easy enquiries. |
 | 6 service pages | Garden design, patios & paving, driveways, walls & steps, decking & fencing, planting & lawns. Each with its own title, H1, URL, projects, FAQs and form. These are what rank. |
-| One page per project | The highest-value SEO asset, and what prospects actually want to see. He already has these indexed under `/site/norwich-gardening-projects/`. |
+| One page per project | The highest-value SEO asset, and what prospects most want to see. |
 | Areas we cover | The full town list, off the home page. |
 | 3–4 town pages | Only where there are real projects to show. Never one per village — thin location pages are a penalty risk. |
 | Ad landing page | No navigation, one action, for paid traffic. Should not be the home page. |
 
 **Migration risk:** the existing `.asp` project URLs are indexed and carry
-rankings the business has today. Any rebuild needs a 301 redirect map, or it
-throws those away. This is the largest technical risk in the project, and the
-classic way a nicer site produces fewer enquiries than the old one.
+rankings today. Any rebuild needs a 301 redirect map, or it throws those
+away. This is the largest technical risk in the project, and the classic way
+a nicer site produces fewer enquiries than the old one.
 
 ## Verified
 
