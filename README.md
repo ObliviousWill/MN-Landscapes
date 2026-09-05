@@ -35,6 +35,27 @@ Each service page carries `Service` and `FAQPage` schema, interior pages carry
 No `aggregateRating` anywhere: inventing review counts is both dishonest and
 against Google's guidelines.
 
+## The owner's intro clip
+
+`assets/video/chris-intro.mp4` — 10.5 seconds, 480x480, with sound. It sits
+in the Meet Chris section in place of the portrait placeholder, with
+`controls`, `playsinline` and `preload="metadata"`; it never autoplays,
+because it has speech. Displayed at 350px on a phone and 418px on a desktop,
+both under the source's 480px so it is never upscaled.
+
+Two things it still needs:
+
+- **Captions or a transcript.** A video carrying speech is inaccessible to
+  deaf visitors and invisible to search without them. Neither can be written
+  without knowing what is said, so they have to come from the owner.
+- **A poster frame.** None is set, so browsers show the first frame. If that
+  frame is a poor one, drop a still into `assets/video/` and add
+  `poster="…"` to the element in `build/build.mjs`.
+
+The single-file copy in `artifact/` carries the clip inline as a data URI,
+which takes it to about 2.5MB. Worth checking it plays there on iOS; if not,
+that copy should fall back to a still.
+
 ## Photographs
 
 `assets/photos/*.jpg` are the sources. `node build/images.mjs` derives 480,
@@ -57,6 +78,7 @@ belong to these particular pictures.
 ```
 assets/site.css        one stylesheet for every page
 assets/photos/         source photographs, derived sizes in r/
+assets/video/          the owner's intro clip
 build/images.mjs       derives responsive variants + photos.json
 build/generated.json   ledger of built files, so renames prune cleanly
 build/content.mjs      all page copy — services, projects, towns

@@ -1,6 +1,6 @@
 import { writeFileSync, mkdirSync, readFileSync, existsSync, rmSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { SITE, HOME_MAIN, ICON, STARS, relOf, link, shell, crumbs, asideCard, photo, ROOT } from './build.mjs';
+import { SITE, HOME_MAIN, ICON, STARS, relOf, link, shell, crumbs, asideCard, photo, video, ROOT } from './build.mjs';
 import { SERVICES, PROJECTS, TOWNS } from './content.mjs';
 
 /* Only projects with photographs are built. */
@@ -110,6 +110,13 @@ function buildHomeMain({ inline }) {
       ${photo(rel, 'design-visual-01', 'A three-dimensional design drawing of a garden, showing the paved terrace, raised beds and grasses, a slatted screen, lawn and a run of timber arches over the path.', { sizes: '(max-width:900px) 100vw, 55vw', inline })}
       <figcaption style="margin-top:.9rem;font-size:.97rem;color:var(--ink-3)">A design drawn for a Norfolk garden, before any of it was built.</figcaption>
     </figure>`);
+  }
+
+  // the owner's intro clip replaces the portrait placeholder
+  {
+    const re = /<div class="plate p-cedar owner__plate">[\s\S]*?<\/div>/;
+    if (!re.test(main)) throw new Error('home: owner plate not found');
+    main = main.replace(re, video(rel, { inline }));
   }
 
   // hero photograph

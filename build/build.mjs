@@ -216,4 +216,18 @@ ${script ? `<script>\n${JS}\n</script>` : ''}
   return html;
 }
 
-export { SITE, CSS, CSS_HASH, JS, PHOTOS, photo, HOME_MAIN, ICON, STARS, relOf, link, shell, crumbs, asideCard, header, footer, actionbar, ROOT };
+/* The owner's intro clip. No autoplay: it has speech, so it plays on a tap.
+   preload="metadata" keeps the page light and still shows a first frame. */
+function video(rel, { className = '', inline = false } = {}) {
+  const src = inline
+    ? `data:video/mp4;base64,${readFileSync(join(ROOT, 'assets/video/chris-intro.mp4')).toString('base64')}`
+    : `${rel}assets/video/chris-intro.mp4`;
+  return `<video class="${('owner__video ' + className).trim()}" controls playsinline
+    preload="metadata" width="480" height="480"
+    aria-label="A short introduction from Chris, who owns MN Landscapes.">
+  <source src="${src}" type="video/mp4">
+  Your browser cannot play this video. Ring Chris on ${SITE.tel} instead.
+</video>`;
+}
+
+export { SITE, CSS, CSS_HASH, JS, PHOTOS, photo, video, HOME_MAIN, ICON, STARS, relOf, link, shell, crumbs, asideCard, header, footer, actionbar, ROOT };
