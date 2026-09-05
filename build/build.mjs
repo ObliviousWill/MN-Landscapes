@@ -24,9 +24,18 @@ const PHOTOS = JSON.parse(read('build/photos.json'));
 
 /* A responsive <picture>. WebP first, JPEG fallback, explicit dimensions so
    nothing shifts as images arrive, and lazy except where told otherwise. */
-function photo(rel, name, alt, { className = '', sizes = '(max-width:900px) 100vw, 50vw', eager = false } = {}) {
+function photo(rel, name, alt, { className = '', sizes = '(max-width:900px) 100vw, 50vw', eager = false, inline = false } = {}) {
   const p = PHOTOS[name];
   if (!p) throw new Error(`unknown photo: ${name}`);
+  /* The single-file build has nowhere to fetch an image from, so it carries
+     one inline instead of a srcset. */
+  if (inline || single) {
+    const b64 = readFileSync(join(ROOT, p.jpg[720] || p.jpg[960])).toString('base64');
+    return `<picture class="${('shot ' + className).trim()}">
+  <img src="data:image/jpeg;base64,${b64}" width="${p.width}" height="${p.height}"
+    alt="${alt}" loading="${eager ? 'eager' : 'lazy'}" decoding="async">
+</picture>`;
+  }
   const widths = Object.keys(p.jpg).map(Number).sort((a, b) => a - b);
   const set = (map) => widths.map(w => `${rel}${map[w]} ${w}w`).join(', ');
   const largest = widths[widths.length - 1];

@@ -66,27 +66,51 @@ ${slugs.map(s => { const x = svc(s); return `    <a href="${rel}${x.slug}/"><b>$
 </div></section>`;
 
 /* ── home ───────────────────────────────────────────────────────────── */
-{
+/* Built twice: once for the site, once as a single self-contained file with
+   the photographs inlined and every page link collapsed to its anchor. */
+function buildHomeMain({ inline }) {
   let main = HOME_MAIN;
   const rel = '';
   const featured = LIVE[0];
   const rest = LIVE.slice(1);
+  const pic = (p, i, opts) => photo(rel, p.photos[i], p.alt, { ...opts, inline });
 
-  // hero: the strongest photograph, loaded eagerly
-  main = main.replace(/<div class="plate p-lawn frame hero__plate">[\s\S]*?<\/div>/,
+  // service tiles link to their own pages, or stay put in the single file
+  const tileRe = /    <article><span class="num">([^<]*)<\/span><h3>([\s\S]*?)<\/h3><p>([\s\S]*?)<\/p><\/article>/g;
+  let i = 0;
+  main = main.replace(tileRe, (_m, num, h3, p) => {
+    const s = SERVICES[i++];
+    return inline
+      ? `    <article><span class="num">${num}</span><h3>${h3}</h3><p>${p}</p></article>`
+      : `    <a class="svc" href="${s.slug}/"><span class="num">${num}</span><h3>${h3}</h3><p>${p}</p><span class="more">More about ${s.nav.toLowerCase()} ${ICON.arrow}</span></a>`;
+  });
+  if (i !== SERVICES.length) throw new Error(`home service tiles: matched ${i}, expected ${SERVICES.length}`);
+
+  main = main.replace('<a class="btn btn--ghost" href="#work">See all our projects',
+    inline ? '<a class="btn btn--ghost" href="#work">See all our projects'
+           : '<a class="btn btn--ghost" href="projects/">See all our projects');
+
+  if (!inline) {
+    main = main.replace(/(<p class="lede" style="max-width:56ch">[\s\S]*?<\/p>)/,
+      `$1\n  <div style="margin-top:1.8rem"><a class="btn btn--onfield" href="areas-we-cover/">See every area we cover ${ICON.arrow}</a></div>`);
+  }
+
+  // hero photograph
+  const heroReplaced = main.replace(/<div class="plate p-lawn frame hero__plate">[\s\S]*?<\/div>/,
     photo(rel, 'modern-porcelain-garden-01',
       'A modern Norfolk garden in large-format grey porcelain, with a horizontal cedar screen, slate-faced raised beds and clipped evergreen planting.',
-      { className: 'hero__shot', eager: true, sizes: '(max-width:900px) 100vw, 50vw' }));
+      { className: 'hero__shot', eager: true, sizes: '(max-width:900px) 100vw, 50vw', inline }));
+  if (heroReplaced === main) throw new Error('home: hero plate not replaced');
+  main = heroReplaced;
 
-  // featured project, built from data; the before/after toggle goes until
-  // there is a real "before" photograph to put behind it
+  // featured project
   {
     const a = main.indexOf('<div class="feature frame">');
     const b = main.indexOf('<div class="projects">');
     if (a === -1 || b === -1) throw new Error('home: feature or projects block not found');
     main = main.slice(0, a) + `<div class="feature frame">
     <div class="feature__media">
-      ${shot(rel, featured, 0, { sizes: '(max-width:860px) 100vw, 55vw' })}
+      ${pic(featured, 0, { sizes: '(max-width:860px) 100vw, 55vw' })}
     </div>
     <div class="feature__pad">
       <p class="eyebrow">Featured project</p>
@@ -96,68 +120,55 @@ ${slugs.map(s => { const x = svc(s); return `    <a href="${rel}${x.slug}/"><b>$
         <li><b>Where</b><span>${featured.location}</span></li>
         <li><b>Materials</b><span>${featured.materials.join(', ')}</span></li>
         <li><b>On site</b><span>${featured.weeks}</span></li>
-      </ul>
+      </ul>${inline ? '' : `
       <div style="margin-top:1.5rem">
         <a class="btn btn--ghost btn--sm" href="projects/${featured.slug}/">See this project ${ICON.arrow}</a>
-      </div>
+      </div>`}
     </div>
   </div>
 
   ` + main.slice(b);
   }
 
-  // card grid, generated from the remaining live projects
+  // card grid
   {
     const a = main.indexOf('<div class="projects">');
     const b = main.indexOf('<div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-top:');
     if (a === -1 || b === -1) throw new Error('home: projects grid bounds not found');
-    main = main.slice(0, a) + `<div class="projects">
-${rest.map(p => `    <a class="proj" href="projects/${p.slug}/" style="text-decoration:none">
-      ${shot(rel, p, p.photos.length > 1 ? 1 : 0, { sizes: '(max-width:620px) 100vw, (max-width:1040px) 50vw, 33vw' })}
+    const card = p => {
+      const inner = `${pic(p, p.photos.length > 1 ? 1 : 0, { sizes: '(max-width:620px) 100vw, (max-width:1040px) 50vw, 33vw' })}
       <div class="proj__pad"><h3>${p.name}</h3><p class="proj__loc">${p.location}</p><p>${p.blurb}</p>
-        <div class="chips">${p.materials.slice(0, 2).map(m => `<span class="chip">${m}</span>`).join('')}</div>
-        <span class="more" style="padding-top:.7rem;font-weight:600;color:var(--field)">See the project ${ICON.arrow}</span></div>
-    </a>`).join('\n')}
+        <div class="chips">${p.materials.slice(0, 2).map(m => `<span class="chip">${m}</span>`).join('')}</div>${inline ? '' : `
+        <span class="more" style="padding-top:.7rem;font-weight:600;color:var(--field)">See the project ${ICON.arrow}</span>`}</div>`;
+      return inline
+        ? `    <article class="proj">\n      ${inner}\n    </article>`
+        : `    <a class="proj" href="projects/${p.slug}/" style="text-decoration:none">\n      ${inner}\n    </a>`;
+    };
+    main = main.slice(0, a) + `<div class="projects">
+${rest.map(card).join('\n')}
   </div>
 
   ` + main.slice(b);
   }
-  // service tiles become links to their own pages
-  const tileRe = /    <article><span class="num">([^<]*)<\/span><h3>([\s\S]*?)<\/h3><p>([\s\S]*?)<\/p><\/article>/g;
-  let i = 0;
-  main = main.replace(tileRe, (_m, num, h3, p) => {
-    const s = SERVICES[i++];
-    return `    <a class="svc" href="${s.slug}/"><span class="num">${num}</span><h3>${h3}</h3><p>${p}</p><span class="more">More about ${s.nav.toLowerCase()} ${ICON.arrow}</span></a>`;
-  });
-  if (i !== SERVICES.length) throw new Error(`home service tiles: matched ${i}, expected ${SERVICES.length}`);
-  // portfolio and areas links now go to real pages
-  const before = main;
-  main = main.replace('<a class="btn btn--ghost" href="#work">See all our projects',
-                      '<a class="btn btn--ghost" href="projects/">See all our projects');
-  if (main === before) throw new Error('home: portfolio link not rewritten');
-  main = main.replace('</ul>\n</div></section>', '</ul>\n</div></section>');
-  main = main.replace(
-    /(<p class="lede" style="max-width:56ch">[\s\S]*?<\/p>)/,
-    `$1\n  <div style="margin-top:1.8rem"><a class="btn btn--onfield" href="areas-we-cover/">See every area we cover ${ICON.arrow}</a></div>`);
-
-  emit('index.html', shell({
-    out: 'index.html',
-    title: 'Garden Design & Landscaping, Norwich & Norfolk | MN Landscapes',
-    description: 'Family-run garden design and build across Norfolk and north Suffolk since 1997. In-house CAD design, our own build teams, free site visit and a fixed written price.',
-    body: `<main id="top">\n${main}\n</main>`,
-    jsonld: [localBusiness],
-  }));
-
-  // single self-contained copy for sharing as one page
-  emit('artifact/index.html', shell({
-    out: 'artifact/index.html',
-    title: 'Garden Design & Landscaping, Norwich & Norfolk | MN Landscapes',
-    description: 'Family-run garden design and build across Norfolk and north Suffolk since 1997.',
-    body: `<main id="top">\n${HOME_MAIN}\n</main>`,
-    inlineCss: true,
-    singleFile: true,
-  }));
+  return main;
 }
+
+emit('index.html', shell({
+  out: 'index.html',
+  title: 'Garden Design & Landscaping, Norwich & Norfolk | MN Landscapes',
+  description: 'Family-run garden design and build across Norfolk and north Suffolk since 1997. In-house CAD design, our own build teams, free site visit and a fixed written price.',
+  body: `<main id="top">\n${buildHomeMain({ inline: false })}\n</main>`,
+  jsonld: [localBusiness],
+}));
+
+emit('artifact/index.html', shell({
+  out: 'artifact/index.html',
+  title: 'Garden Design & Landscaping, Norwich & Norfolk | MN Landscapes',
+  description: 'Family-run garden design and build across Norfolk and north Suffolk since 1997.',
+  body: `<main id="top">\n${buildHomeMain({ inline: true })}\n</main>`,
+  inlineCss: true,
+  singleFile: true,
+}));
 
 /* ── services hub ───────────────────────────────────────────────────── */
 {
