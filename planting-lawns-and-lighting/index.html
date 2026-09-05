@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://www.mnlandscapes.co.uk/planting-lawns-and-lighting/">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,400..700;1,400..600&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
-<link rel="stylesheet" href="../assets/site.css?v=6971a9deda">
+<link rel="stylesheet" href="../assets/site.css?v=aeae799ce6">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.mnlandscapes.co.uk/"},{"@type":"ListItem","position":2,"name":"What we do","item":"https://www.mnlandscapes.co.uk/services/"},{"@type":"ListItem","position":3,"name":"Planting, lawns & lighting"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"When is the best time to plant?","acceptedAnswer":{"@type":"Answer","text":"Autumn is ideal — the ground is warm, the rain does the watering, and roots establish before spring. Spring works well too. Midsummer planting is possible but commits you to watering."}},{"@type":"Question","name":"Will you tell me how to look after it?","acceptedAnswer":{"@type":"Answer","text":"Yes. You get the planting plan at handover, so you know what every plant is and what it needs. That is worth keeping — it makes everything afterwards easier."}},{"@type":"Question","name":"Do you do regular garden maintenance?","acceptedAnswer":{"@type":"Answer","text":"No. We are a design and build company and we would rather do that one thing properly. If you would like a regular gardener afterwards, ask and we will point you towards people locally."}},{"@type":"Question","name":"How long before a new border looks full?","acceptedAnswer":{"@type":"Answer","text":"Two to three seasons for perennials and grasses; longer for shrubs and trees. We can plant more densely to close the gaps sooner, and thin it later."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Planting, lawns & lighting","serviceType":"Planting, lawns and garden lighting","description":"Planting plans for Norfolk soils, turf laid on properly prepared ground, and low-voltage garden lighting wired in as the garden is built.","provider":{"@type":"LandscapingBusiness","name":"MN Landscapes","telephone":"07387 085952"},"areaServed":{"@type":"AdministrativeArea","name":"Norfolk"}}</script>
@@ -202,10 +202,15 @@
     document.documentElement.style.overflow=open?'hidden':'';
     document.body.style.overflow=open?'hidden':'';
     if(open){
-      /* the header sits above the panel and its height changes with scroll,
-         so clear it by measurement rather than a guessed padding */
+      /* the header sits above the panel and the call bar below it, and both
+         change height with scroll and viewport, so clear them by measurement
+         rather than by guessed padding */
       var hdr=document.querySelector('header');
-      if(hdr) nav.style.paddingTop=Math.round(hdr.getBoundingClientRect().bottom+28)+'px';
+      if(hdr) nav.style.paddingTop=Math.round(hdr.getBoundingClientRect().bottom+20)+'px';
+      var bar=document.getElementById('actionbar');
+      var barH=(bar&&getComputedStyle(bar).display!=='none')
+        ? bar.getBoundingClientRect().height : 0;
+      nav.style.paddingBottom=Math.round(barH+24)+'px';
       var first=nav.querySelector('a');
       if(first) first.focus();
     }else{

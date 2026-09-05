@@ -132,7 +132,10 @@ nav a:hover{color:var(--field);border-bottom-color:var(--leaf)}
   @keyframes navIn{from{transform:translateY(-100%)}to{transform:none}}
   nav ul{flex-direction:column;gap:0}
   nav li{border-bottom:1px solid var(--line)}
-  nav a{display:block;font-size:1.35rem;padding:1.05rem 0;border:0}
+  /* row height scales with the viewport so all seven items fit on a small
+     phone without scrolling, and never drops below a 48px tap target */
+  nav a{display:block;font-size:clamp(1.2rem,2.6vh,1.35rem);
+    padding:clamp(.75rem,2vh,1.05rem) 0;border:0;min-height:48px}
   #menubtn{display:inline-flex;margin-left:auto;order:9;z-index:70;position:relative}
   .mark{position:relative;z-index:70}
   .bar .tel{order:8}
@@ -428,7 +431,8 @@ footer.site .mark span{color:var(--on-field-3)}
 
 /* ── Sticky action bar ──────────────────────────────────────────────── */
 #actionbar{position:fixed;inset:auto 0 0 0;z-index:70;display:none;
-  border-top:1px solid var(--line);box-shadow:0 -6px 24px -12px rgba(31,42,34,.4)}
+  border-top:1px solid var(--line);box-shadow:0 -6px 24px -12px rgba(31,42,34,.4);
+  padding-bottom:env(safe-area-inset-bottom,0px)}
 #actionbar a{flex:1 1 0;display:flex;align-items:center;justify-content:center;
   gap:.5rem;min-height:66px;font-weight:600;font-size:1.08rem;text-decoration:none}
 #actionbar .call{background:var(--paper);color:var(--field)}
@@ -1055,10 +1059,15 @@ body.landing .lhero__plate{min-height:clamp(340px,36vw,470px);box-shadow:var(--s
     document.documentElement.style.overflow=open?'hidden':'';
     document.body.style.overflow=open?'hidden':'';
     if(open){
-      /* the header sits above the panel and its height changes with scroll,
-         so clear it by measurement rather than a guessed padding */
+      /* the header sits above the panel and the call bar below it, and both
+         change height with scroll and viewport, so clear them by measurement
+         rather than by guessed padding */
       var hdr=document.querySelector('header');
-      if(hdr) nav.style.paddingTop=Math.round(hdr.getBoundingClientRect().bottom+28)+'px';
+      if(hdr) nav.style.paddingTop=Math.round(hdr.getBoundingClientRect().bottom+20)+'px';
+      var bar=document.getElementById('actionbar');
+      var barH=(bar&&getComputedStyle(bar).display!=='none')
+        ? bar.getBoundingClientRect().height : 0;
+      nav.style.paddingBottom=Math.round(barH+24)+'px';
       var first=nav.querySelector('a');
       if(first) first.focus();
     }else{

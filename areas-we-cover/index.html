@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://www.mnlandscapes.co.uk/areas-we-cover/">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,400..700;1,400..600&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
-<link rel="stylesheet" href="../assets/site.css?v=6971a9deda">
+<link rel="stylesheet" href="../assets/site.css?v=aeae799ce6">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.mnlandscapes.co.uk/"},{"@type":"ListItem","position":2,"name":"Areas we cover"}]}</script>
 </head>
 <body>
@@ -170,10 +170,15 @@
     document.documentElement.style.overflow=open?'hidden':'';
     document.body.style.overflow=open?'hidden':'';
     if(open){
-      /* the header sits above the panel and its height changes with scroll,
-         so clear it by measurement rather than a guessed padding */
+      /* the header sits above the panel and the call bar below it, and both
+         change height with scroll and viewport, so clear them by measurement
+         rather than by guessed padding */
       var hdr=document.querySelector('header');
-      if(hdr) nav.style.paddingTop=Math.round(hdr.getBoundingClientRect().bottom+28)+'px';
+      if(hdr) nav.style.paddingTop=Math.round(hdr.getBoundingClientRect().bottom+20)+'px';
+      var bar=document.getElementById('actionbar');
+      var barH=(bar&&getComputedStyle(bar).display!=='none')
+        ? bar.getBoundingClientRect().height : 0;
+      nav.style.paddingBottom=Math.round(barH+24)+'px';
       var first=nav.querySelector('a');
       if(first) first.focus();
     }else{

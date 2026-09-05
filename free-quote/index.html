@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://www.mnlandscapes.co.uk/free-quote/">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,400..700;1,400..600&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
-<link rel="stylesheet" href="../assets/site.css?v=6971a9deda">
+<link rel="stylesheet" href="../assets/site.css?v=aeae799ce6">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"LandscapingBusiness","name":"MN Landscapes","telephone":"07387 085952","email":"chris@mnlandscapes.com","foundingDate":"1997","url":"https://www.mnlandscapes.co.uk/","priceRange":"££","address":{"@type":"PostalAddress","addressLocality":"Wymondham","addressRegion":"Norfolk","addressCountry":"GB"},"areaServed":[{"@type":"City","name":"Norwich"},{"@type":"City","name":"Wymondham"},{"@type":"City","name":"Attleborough"},{"@type":"City","name":"Hethersett"},{"@type":"City","name":"Cringleford"},{"@type":"City","name":"Costessey"},{"@type":"City","name":"Taverham"},{"@type":"City","name":"Drayton"},{"@type":"City","name":"Hingham"},{"@type":"City","name":"Mulbarton"},{"@type":"City","name":"Poringland"},{"@type":"City","name":"Framingham Earl"},{"@type":"City","name":"Brooke"},{"@type":"City","name":"Loddon"},{"@type":"City","name":"Long Stratton"},{"@type":"City","name":"Diss"},{"@type":"City","name":"Harleston"},{"@type":"City","name":"Dereham"},{"@type":"City","name":"Watton"},{"@type":"City","name":"Thetford"},{"@type":"City","name":"Aylsham"},{"@type":"City","name":"Wroxham"},{"@type":"City","name":"Bungay"},{"@type":"City","name":"Beccles"}],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"17:00"}]}</script>
 </head>
 <body class="landing">
@@ -233,10 +233,15 @@
     document.documentElement.style.overflow=open?'hidden':'';
     document.body.style.overflow=open?'hidden':'';
     if(open){
-      /* the header sits above the panel and its height changes with scroll,
-         so clear it by measurement rather than a guessed padding */
+      /* the header sits above the panel and the call bar below it, and both
+         change height with scroll and viewport, so clear them by measurement
+         rather than by guessed padding */
       var hdr=document.querySelector('header');
-      if(hdr) nav.style.paddingTop=Math.round(hdr.getBoundingClientRect().bottom+28)+'px';
+      if(hdr) nav.style.paddingTop=Math.round(hdr.getBoundingClientRect().bottom+20)+'px';
+      var bar=document.getElementById('actionbar');
+      var barH=(bar&&getComputedStyle(bar).display!=='none')
+        ? bar.getBoundingClientRect().height : 0;
+      nav.style.paddingBottom=Math.round(barH+24)+'px';
       var first=nav.querySelector('a');
       if(first) first.focus();
     }else{

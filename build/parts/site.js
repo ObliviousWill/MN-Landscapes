@@ -28,10 +28,15 @@
     document.documentElement.style.overflow=open?'hidden':'';
     document.body.style.overflow=open?'hidden':'';
     if(open){
-      /* the header sits above the panel and its height changes with scroll,
-         so clear it by measurement rather than a guessed padding */
+      /* the header sits above the panel and the call bar below it, and both
+         change height with scroll and viewport, so clear them by measurement
+         rather than by guessed padding */
       var hdr=document.querySelector('header');
-      if(hdr) nav.style.paddingTop=Math.round(hdr.getBoundingClientRect().bottom+28)+'px';
+      if(hdr) nav.style.paddingTop=Math.round(hdr.getBoundingClientRect().bottom+20)+'px';
+      var bar=document.getElementById('actionbar');
+      var barH=(bar&&getComputedStyle(bar).display!=='none')
+        ? bar.getBoundingClientRect().height : 0;
+      nav.style.paddingBottom=Math.round(barH+24)+'px';
       var first=nav.querySelector('a');
       if(first) first.focus();
     }else{
