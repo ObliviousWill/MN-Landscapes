@@ -185,6 +185,10 @@ nav a:hover{color:var(--field);border-bottom-color:var(--leaf)}
 .hero__grid{display:grid;grid-template-columns:1fr 1.06fr;
   gap:clamp(1.8rem,4vw,4rem);align-items:center}
 .hero h1{margin:.9rem 0 0}
+/* Each clause is one unbreakable unit, so a line never ends on a stray
+   word. Does not rely on text-wrap: balance, which Safari supports
+   unevenly. */
+.hero h1 span{display:inline-block}
 .hero h1 em{font-style:normal;
   -webkit-box-decoration-break:clone;box-decoration-break:clone;
   background-image:linear-gradient(transparent 70%,rgba(209,140,34,.40) 70%,rgba(209,140,34,.40) 87%,transparent 87%)}
@@ -585,7 +589,7 @@ body.landing .lhero__plate{min-height:clamp(340px,36vw,470px);box-shadow:var(--s
 <section class="hero"><div class="wrap hero__grid">
   <div>
     <p class="eyebrow">Garden design &amp; build &middot; Norfolk &amp; Suffolk</p>
-    <h1>We design it, we build it,<br><em>and we plant it</em>.</h1>
+    <h1><span>We design it,</span> <span>we build it,</span> <span><em>and we plant it</em>.</span></h1>
     <p class="lede hero__p">Designing and building Norfolk gardens since 1997. In-house CAD design, our own build teams, and one company from the first drawing to the final plant &mdash; so the garden still looks right in year five.</p>
     <div class="hero__cta">
       <a class="btn" href="#quote">Get a free quote

@@ -174,6 +174,10 @@ nav a:hover{color:var(--field);border-bottom-color:var(--leaf)}
 .hero__grid{display:grid;grid-template-columns:1fr 1.06fr;
   gap:clamp(1.8rem,4vw,4rem);align-items:center}
 .hero h1{margin:.9rem 0 0}
+/* Each clause is one unbreakable unit, so a line never ends on a stray
+   word. Does not rely on text-wrap: balance, which Safari supports
+   unevenly. */
+.hero h1 span{display:inline-block}
 .hero h1 em{font-style:normal;
   -webkit-box-decoration-break:clone;box-decoration-break:clone;
   background-image:linear-gradient(transparent 70%,rgba(209,140,34,.40) 70%,rgba(209,140,34,.40) 87%,transparent 87%)}
