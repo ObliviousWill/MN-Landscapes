@@ -7,6 +7,13 @@ import { SERVICES, PROJECTS, TOWNS } from './content.mjs';
 const LIVE = PROJECTS.filter(p => p.photos && p.photos.length);
 const shot = (rel, p, i = 0, opts = {}) => photo(rel, p.photos[i], p.alt, opts);
 
+/* Two photographs of the same view, side by side. More legible than a
+   toggle, needs no interaction, and suits the source resolution better. */
+const beforeAfter = (rel, p, opts = {}) => `<div class="ba-pair ${opts.className || ''}".trim()>
+  <figure>${photo(rel, p.beforeAfter.before, 'The same garden before the work started.', { sizes: opts.sizes || '(max-width:860px) 50vw, 28vw', inline: opts.inline })}<figcaption>Before</figcaption></figure>
+  <figure>${photo(rel, p.beforeAfter.after, p.alt, { sizes: opts.sizes || '(max-width:860px) 50vw, 28vw', inline: opts.inline })}<figcaption>One year later</figcaption></figure>
+</div>`.replace('".trim()>', '">');
+
 const svc = s => SERVICES.find(x => x.slug === s);
 const out = [];
 const emit = (path, content) => {
@@ -71,8 +78,8 @@ ${slugs.map(s => { const x = svc(s); return `    <a href="${rel}${x.slug}/"><b>$
 function buildHomeMain({ inline }) {
   let main = HOME_MAIN;
   const rel = '';
-  const featured = LIVE[0];
-  const rest = LIVE.slice(1);
+  const featured = LIVE.find(p => p.beforeAfter) || LIVE[0];
+  const rest = LIVE.filter(p => p !== featured).slice(0, 4);
   const pic = (p, i, opts) => photo(rel, p.photos[i], p.alt, { ...opts, inline });
 
   // service tiles link to their own pages, or stay put in the single file
@@ -110,7 +117,8 @@ function buildHomeMain({ inline }) {
     if (a === -1 || b === -1) throw new Error('home: feature or projects block not found');
     main = main.slice(0, a) + `<div class="feature frame">
     <div class="feature__media">
-      ${pic(featured, 0, { sizes: '(max-width:860px) 100vw, 55vw' })}
+      ${featured.beforeAfter ? beforeAfter(rel, featured, { inline })
+        : pic(featured, 0, { sizes: '(max-width:860px) 100vw, 55vw' })}
     </div>
     <div class="feature__pad">
       <p class="eyebrow">Featured project</p>
@@ -322,12 +330,18 @@ ${p.did.map(d => `  <li>${d}</li>`).join('\n')}
   ${asideCard(rel, 'Want something like this?', 'Tell us which bits you like. Free visit, itemised written quote, no obligation.')}
 </div></section>
 
+${p.beforeAfter ? `
+<section class="section" style="padding-top:0"><div class="wrap">
+  <div class="head"><div><p class="eyebrow">The same view</p><h2>Before, and a year on</h2></div>
+    <p class="measure">The photograph on the right was taken twelve months after we finished, once the planting had a season behind it.</p></div>
+  ${beforeAfter(rel, p, { className: 'ba-standalone', sizes: '(max-width:620px) 50vw, 40vw' })}
+</div></section>` : `
 <section class="section" style="padding-top:0"><div class="wrap">
   <div class="head"><div><p class="eyebrow">Photographs</p><h2>${p.name}</h2></div></div>
   <div class="gallery">
 ${p.photos.map((n, i) => `    ${photo(rel, n, p.alt, { className: i === 0 ? 'wide' : '', sizes: i === 0 ? '(max-width:620px) 100vw, 80vw' : '(max-width:620px) 100vw, 40vw' })}`).join('\n')}
   </div>
-</div></section>
+</div></section>`}
 ${related(rel, p.services.concat(p.services.length < 3 ? ['garden-design'] : []).slice(0, 3))}
 </main>`,
     jsonld: [breadcrumbSchema(trail)],

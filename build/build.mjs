@@ -30,7 +30,11 @@ function photo(rel, name, alt, { className = '', sizes = '(max-width:900px) 100v
   /* The single-file build has nowhere to fetch an image from, so it carries
      one inline instead of a srcset. */
   if (inline || single) {
-    const b64 = readFileSync(join(ROOT, p.jpg[720] || p.jpg[960])).toString('base64');
+    /* largest variant up to 720, or the largest there is — narrow sources
+       (portraits, once letterboxing is trimmed) may only have a 480 */
+    const avail = Object.keys(p.jpg).map(Number).sort((a, b) => a - b);
+    const pick = avail.filter(w => w <= 720).pop() || avail[avail.length - 1];
+    const b64 = readFileSync(join(ROOT, p.jpg[pick])).toString('base64');
     return `<picture class="${('shot ' + className).trim()}">
   <img src="data:image/jpeg;base64,${b64}" width="${p.width}" height="${p.height}"
     alt="${alt}" loading="${eager ? 'eager' : 'lazy'}" decoding="async">

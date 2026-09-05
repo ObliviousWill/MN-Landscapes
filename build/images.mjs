@@ -16,15 +16,32 @@ const manifest = {};
 
 for (const file of readdirSync(SRC).filter(f => /\.jpe?g$/i.test(f))) {
   const name = basename(file, extname(file));
-  const img = sharp(join(SRC, file));
-  const meta = await img.metadata();
+  const raw = await sharp(join(SRC, file)).metadata();
+
+  /* Several sources are portrait photographs letterboxed into a landscape
+     canvas. Trim the flat border, but only accept a trim that actually
+     removes bars rather than eating into the picture. */
+  let src = join(SRC, file);
+  let meta = raw;
+  try {
+    const trimmed = await sharp(src).trim({ threshold: 12 }).toBuffer({ resolveWithObject: true });
+    const t = trimmed.info;
+    const keptArea = (t.width * t.height) / (raw.width * raw.height);
+    if (keptArea < 0.98 && keptArea > 0.35) {
+      src = trimmed.data;
+      meta = { width: t.width, height: t.height };
+      console.log(`  trimmed ${name}: ${raw.width}x${raw.height} -> ${t.width}x${t.height}`);
+    }
+  } catch {}
+  const img = sharp(src);
   const entry = { width: meta.width, height: meta.height, jpg: {}, webp: {} };
+  entry.portrait = meta.height > meta.width;
   for (const w of WIDTHS) {
     if (w > meta.width) continue;
     const h = Math.round((meta.height / meta.width) * w);
-    await sharp(join(SRC, file)).resize(w, h, { fit: 'cover' })
+    await sharp(src).resize(w, h, { fit: 'cover' })
       .jpeg({ quality: 78, mozjpeg: true }).toFile(join(OUT, `${name}-${w}.jpg`));
-    await sharp(join(SRC, file)).resize(w, h, { fit: 'cover' })
+    await sharp(src).resize(w, h, { fit: 'cover' })
       .webp({ quality: 74 }).toFile(join(OUT, `${name}-${w}.webp`));
     entry.jpg[w] = `assets/photos/r/${name}-${w}.jpg`;
     entry.webp[w] = `assets/photos/r/${name}-${w}.webp`;

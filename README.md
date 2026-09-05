@@ -104,15 +104,17 @@ not a strategy — which is why only Norwich has one so far.
 
 ## To take this live
 
-1. **More photography.** Five photographs are in, driving four projects.
-   Still on plates: the owner portrait, the driveways service page, and any
-   "before" shot. Drop files into `assets/photos/`, run
-   `node build/images.mjs`, add the filename to a project's `photos` array in
-   `build/content.mjs`, and rebuild.
+1. **More photography.** Ten photographs are in, driving seven projects,
+   including a genuine before / one-year-later pair. Still on plates: the
+   owner portrait and the driveways service page. Two real projects from the
+   old site stay dormant in `build/content.mjs` awaiting pictures — the
+   decking and veg bed garden, and the lighting and water feature one.
 
-   The five supplied are 960px wide, taken from the old site. Enough for
-   cards and the current hero, not for a full-bleed hero later — the camera
-   originals would be worth having.
+   Sources are 960px wide, taken from the old site, and several are portrait
+   photographs letterboxed into a landscape canvas — the build trims the bars,
+   which leaves those around 495px wide. Fine at the sizes used, but the
+   camera originals would be worth having, especially for the before/after
+   pair and anything meant to run full width.
 2. **Guide prices.** "What does a patio cost" is the question most visitors
    arrive with, and not answering it is the biggest conversion leak on almost
    every landscaper site. Honest price bands would outperform every other

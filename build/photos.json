@@ -1,17 +1,42 @@
 {
+  "country-garden-pergola-01": {
+    "width": 879,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/country-garden-pergola-01-480.jpg",
+      "720": "assets/photos/r/country-garden-pergola-01-720.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/country-garden-pergola-01-480.webp",
+      "720": "assets/photos/r/country-garden-pergola-01-720.webp"
+    },
+    "portrait": false
+  },
+  "curved-sandstone-patio-01": {
+    "width": 878,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/curved-sandstone-patio-01-480.jpg",
+      "720": "assets/photos/r/curved-sandstone-patio-01-720.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/curved-sandstone-patio-01-480.webp",
+      "720": "assets/photos/r/curved-sandstone-patio-01-720.webp"
+    },
+    "portrait": false
+  },
   "modern-porcelain-garden-01": {
-    "width": 960,
+    "width": 879,
     "height": 656,
     "jpg": {
       "480": "assets/photos/r/modern-porcelain-garden-01-480.jpg",
-      "720": "assets/photos/r/modern-porcelain-garden-01-720.jpg",
-      "960": "assets/photos/r/modern-porcelain-garden-01-960.jpg"
+      "720": "assets/photos/r/modern-porcelain-garden-01-720.jpg"
     },
     "webp": {
       "480": "assets/photos/r/modern-porcelain-garden-01-480.webp",
-      "720": "assets/photos/r/modern-porcelain-garden-01-720.webp",
-      "960": "assets/photos/r/modern-porcelain-garden-01-960.webp"
-    }
+      "720": "assets/photos/r/modern-porcelain-garden-01-720.webp"
+    },
+    "portrait": false
   },
   "modern-porcelain-garden-02": {
     "width": 960,
@@ -25,48 +50,79 @@
       "480": "assets/photos/r/modern-porcelain-garden-02-480.webp",
       "720": "assets/photos/r/modern-porcelain-garden-02-720.webp",
       "960": "assets/photos/r/modern-porcelain-garden-02-960.webp"
-    }
+    },
+    "portrait": false
+  },
+  "newbuild-garden-after": {
+    "width": 494,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/newbuild-garden-after-480.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/newbuild-garden-after-480.webp"
+    },
+    "portrait": true
+  },
+  "newbuild-garden-before": {
+    "width": 501,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/newbuild-garden-before-480.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/newbuild-garden-before-480.webp"
+    },
+    "portrait": true
   },
   "raised-sandstone-patio-01": {
-    "width": 960,
+    "width": 879,
     "height": 656,
     "jpg": {
       "480": "assets/photos/r/raised-sandstone-patio-01-480.jpg",
-      "720": "assets/photos/r/raised-sandstone-patio-01-720.jpg",
-      "960": "assets/photos/r/raised-sandstone-patio-01-960.jpg"
+      "720": "assets/photos/r/raised-sandstone-patio-01-720.jpg"
     },
     "webp": {
       "480": "assets/photos/r/raised-sandstone-patio-01-480.webp",
-      "720": "assets/photos/r/raised-sandstone-patio-01-720.webp",
-      "960": "assets/photos/r/raised-sandstone-patio-01-960.webp"
-    }
+      "720": "assets/photos/r/raised-sandstone-patio-01-720.webp"
+    },
+    "portrait": false
   },
   "riven-sandstone-patio-01": {
-    "width": 960,
+    "width": 877,
     "height": 656,
     "jpg": {
       "480": "assets/photos/r/riven-sandstone-patio-01-480.jpg",
-      "720": "assets/photos/r/riven-sandstone-patio-01-720.jpg",
-      "960": "assets/photos/r/riven-sandstone-patio-01-960.jpg"
+      "720": "assets/photos/r/riven-sandstone-patio-01-720.jpg"
     },
     "webp": {
       "480": "assets/photos/r/riven-sandstone-patio-01-480.webp",
-      "720": "assets/photos/r/riven-sandstone-patio-01-720.webp",
-      "960": "assets/photos/r/riven-sandstone-patio-01-960.webp"
-    }
+      "720": "assets/photos/r/riven-sandstone-patio-01-720.webp"
+    },
+    "portrait": false
+  },
+  "town-garden-sandstone-01": {
+    "width": 496,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/town-garden-sandstone-01-480.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/town-garden-sandstone-01-480.webp"
+    },
+    "portrait": true
   },
   "walled-garden-terrace-01": {
-    "width": 960,
+    "width": 880,
     "height": 656,
     "jpg": {
       "480": "assets/photos/r/walled-garden-terrace-01-480.jpg",
-      "720": "assets/photos/r/walled-garden-terrace-01-720.jpg",
-      "960": "assets/photos/r/walled-garden-terrace-01-960.jpg"
+      "720": "assets/photos/r/walled-garden-terrace-01-720.jpg"
     },
     "webp": {
       "480": "assets/photos/r/walled-garden-terrace-01-480.webp",
-      "720": "assets/photos/r/walled-garden-terrace-01-720.webp",
-      "960": "assets/photos/r/walled-garden-terrace-01-960.webp"
-    }
+      "720": "assets/photos/r/walled-garden-terrace-01-720.webp"
+    },
+    "portrait": false
   }
 }
