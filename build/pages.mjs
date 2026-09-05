@@ -114,8 +114,8 @@ function buildHomeMain({ inline }) {
 
   // hero photograph
   const heroReplaced = main.replace(/<div class="plate p-lawn frame hero__plate">[\s\S]*?<\/div>/,
-    photo(rel, 'modern-porcelain-garden-01',
-      'A modern Norfolk garden in large-format grey porcelain, with a horizontal cedar screen, slate-faced raised beds and clipped evergreen planting.',
+    photo(rel, 'walled-parterre-01',
+      'A formal walled garden with a pale limestone terrace, clipped box parterre, standard trees and a still water feature set into the lawn.',
       { className: 'hero__shot', eager: true, sizes: '(max-width:900px) 100vw, 50vw', inline }));
   if (heroReplaced === main) throw new Error('home: hero plate not replaced');
   main = heroReplaced;

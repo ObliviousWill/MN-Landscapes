@@ -77,6 +77,45 @@
     },
     "portrait": false
   },
+  "kitchen-garden-beds-01": {
+    "width": 879,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/kitchen-garden-beds-01-480.jpg",
+      "720": "assets/photos/r/kitchen-garden-beds-01-720.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/kitchen-garden-beds-01-480.webp",
+      "720": "assets/photos/r/kitchen-garden-beds-01-720.webp"
+    },
+    "portrait": false
+  },
+  "kitchen-garden-beds-02": {
+    "width": 880,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/kitchen-garden-beds-02-480.jpg",
+      "720": "assets/photos/r/kitchen-garden-beds-02-720.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/kitchen-garden-beds-02-480.webp",
+      "720": "assets/photos/r/kitchen-garden-beds-02-720.webp"
+    },
+    "portrait": false
+  },
+  "limestone-patio-sphere-01": {
+    "width": 880,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/limestone-patio-sphere-01-480.jpg",
+      "720": "assets/photos/r/limestone-patio-sphere-01-720.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/limestone-patio-sphere-01-480.webp",
+      "720": "assets/photos/r/limestone-patio-sphere-01-720.webp"
+    },
+    "portrait": false
+  },
   "modern-porcelain-garden-01": {
     "width": 879,
     "height": 656,
@@ -187,5 +226,29 @@
       "720": "assets/photos/r/walled-garden-terrace-01-720.webp"
     },
     "portrait": false
+  },
+  "walled-parterre-01": {
+    "width": 878,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/walled-parterre-01-480.jpg",
+      "720": "assets/photos/r/walled-parterre-01-720.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/walled-parterre-01-480.webp",
+      "720": "assets/photos/r/walled-parterre-01-720.webp"
+    },
+    "portrait": false
+  },
+  "walled-parterre-02": {
+    "width": 496,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/walled-parterre-02-480.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/walled-parterre-02-480.webp"
+    },
+    "portrait": true
   }
 }

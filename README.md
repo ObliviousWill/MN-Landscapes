@@ -104,12 +104,12 @@ not a strategy — which is why only Norwich has one so far.
 
 ## To take this live
 
-1. **More photography.** Fifteen photographs are in, driving eleven
-   projects, a genuine before / one-year-later pair, and a real design
-   drawing on the home page and the garden design page. Still on plates:
-   the owner portrait. Two projects from the old site stay dormant in
-   `build/content.mjs` awaiting pictures — the decking and veg bed garden,
-   and the lighting and water feature one.
+1. **More photography.** Twenty photographs are in, driving fourteen
+   projects, a before / one-year-later pair, and a real design drawing. The
+   owner portrait is the last placeholder on the site. Two projects from the
+   old site stay dormant in `build/content.mjs` awaiting pictures — the
+   decking and veg bed garden, and the lighting and water feature one, which
+   still needs an after-dark shot.
 
    Sources are 960px wide, taken from the old site, and several are portrait
    photographs letterboxed into a landscape canvas — the build trims the
