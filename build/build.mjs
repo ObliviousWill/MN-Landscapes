@@ -128,8 +128,7 @@ const footer = rel => `<footer class="site"><div class="wrap">
   </div>
   <p class="legal">
     MN Landscapes Limited &middot; Registered in England &amp; Wales, company no. 15210988 &middot; Wymondham, Norfolk<br>
-    &copy; 2026 MN Landscapes Limited<br>
-    Concept design build &mdash; not the live MN Landscapes website.
+    &copy; 2026 MN Landscapes Limited
   </p>
 </div></footer>`;
 
