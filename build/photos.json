@@ -1,0 +1,72 @@
+{
+  "modern-porcelain-garden-01": {
+    "width": 960,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/modern-porcelain-garden-01-480.jpg",
+      "720": "assets/photos/r/modern-porcelain-garden-01-720.jpg",
+      "960": "assets/photos/r/modern-porcelain-garden-01-960.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/modern-porcelain-garden-01-480.webp",
+      "720": "assets/photos/r/modern-porcelain-garden-01-720.webp",
+      "960": "assets/photos/r/modern-porcelain-garden-01-960.webp"
+    }
+  },
+  "modern-porcelain-garden-02": {
+    "width": 960,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/modern-porcelain-garden-02-480.jpg",
+      "720": "assets/photos/r/modern-porcelain-garden-02-720.jpg",
+      "960": "assets/photos/r/modern-porcelain-garden-02-960.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/modern-porcelain-garden-02-480.webp",
+      "720": "assets/photos/r/modern-porcelain-garden-02-720.webp",
+      "960": "assets/photos/r/modern-porcelain-garden-02-960.webp"
+    }
+  },
+  "raised-sandstone-patio-01": {
+    "width": 960,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/raised-sandstone-patio-01-480.jpg",
+      "720": "assets/photos/r/raised-sandstone-patio-01-720.jpg",
+      "960": "assets/photos/r/raised-sandstone-patio-01-960.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/raised-sandstone-patio-01-480.webp",
+      "720": "assets/photos/r/raised-sandstone-patio-01-720.webp",
+      "960": "assets/photos/r/raised-sandstone-patio-01-960.webp"
+    }
+  },
+  "riven-sandstone-patio-01": {
+    "width": 960,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/riven-sandstone-patio-01-480.jpg",
+      "720": "assets/photos/r/riven-sandstone-patio-01-720.jpg",
+      "960": "assets/photos/r/riven-sandstone-patio-01-960.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/riven-sandstone-patio-01-480.webp",
+      "720": "assets/photos/r/riven-sandstone-patio-01-720.webp",
+      "960": "assets/photos/r/riven-sandstone-patio-01-960.webp"
+    }
+  },
+  "walled-garden-terrace-01": {
+    "width": 960,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/walled-garden-terrace-01-480.jpg",
+      "720": "assets/photos/r/walled-garden-terrace-01-720.jpg",
+      "960": "assets/photos/r/walled-garden-terrace-01-960.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/walled-garden-terrace-01-480.webp",
+      "720": "assets/photos/r/walled-garden-terrace-01-720.webp",
+      "960": "assets/photos/r/walled-garden-terrace-01-960.webp"
+    }
+  }
+}

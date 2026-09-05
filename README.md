@@ -35,10 +35,30 @@ Each service page carries `Service` and `FAQPage` schema, interior pages carry
 No `aggregateRating` anywhere: inventing review counts is both dishonest and
 against Google's guidelines.
 
+## Photographs
+
+`assets/photos/*.jpg` are the sources. `node build/images.mjs` derives 480,
+720 and 960px JPEG and WebP variants into `assets/photos/r/` and writes
+`build/photos.json`. Pages emit `<picture>` with srcset, explicit dimensions
+so nothing shifts as images load, and lazy loading everywhere but the hero.
+Sources are never upscaled.
+
+A project builds only if it has a `photos` array. Three real projects from
+the old site sit dormant in `build/content.mjs` with copy written and no
+pictures — add photographs and they appear automatically.
+
+**Photo-to-project pairings are inferred from the images themselves and need
+the owner's confirmation.** Materials and layouts are described from what is
+visible; project names and locations came from the old site and may not
+belong to these particular pictures.
+
 ## Editing it
 
 ```
 assets/site.css        one stylesheet for every page
+assets/photos/         source photographs, derived sizes in r/
+build/images.mjs       derives responsive variants + photos.json
+build/generated.json   ledger of built files, so renames prune cleanly
 build/content.mjs      all page copy — services, projects, towns
 build/build.mjs        templates: shell, header, footer, breadcrumbs
 build/pages.mjs        assembles and writes every page
@@ -84,10 +104,15 @@ not a strategy — which is why only Norwich has one so far.
 
 ## To take this live
 
-1. **Photography.** Every image slot is a textured "material plate" tagged
-   with what belongs there, including a portrait of the owner. Swap each `<div class="plate …">` for an `<img>`; the aspect
-   ratios are already set. This is the most important outstanding item — on a
-   landscaping site the photographs *are* the product.
+1. **More photography.** Five photographs are in, driving four projects.
+   Still on plates: the owner portrait, the driveways service page, and any
+   "before" shot. Drop files into `assets/photos/`, run
+   `node build/images.mjs`, add the filename to a project's `photos` array in
+   `build/content.mjs`, and rebuild.
+
+   The five supplied are 960px wide, taken from the old site. Enough for
+   cards and the current hero, not for a full-bleed hero later — the camera
+   originals would be worth having.
 2. **Guide prices.** "What does a patio cost" is the question most visitors
    arrive with, and not answering it is the biggest conversion leak on almost
    every landscaper site. Honest price bands would outperform every other

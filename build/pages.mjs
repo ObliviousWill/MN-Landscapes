@@ -1,7 +1,11 @@
-import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readFileSync, existsSync, rmSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { SITE, HOME_MAIN, ICON, STARS, relOf, link, shell, crumbs, asideCard, ROOT } from './build.mjs';
+import { SITE, HOME_MAIN, ICON, STARS, relOf, link, shell, crumbs, asideCard, photo, ROOT } from './build.mjs';
 import { SERVICES, PROJECTS, TOWNS } from './content.mjs';
+
+/* Only projects with photographs are built. */
+const LIVE = PROJECTS.filter(p => p.photos && p.photos.length);
+const shot = (rel, p, i = 0, opts = {}) => photo(rel, p.photos[i], p.alt, opts);
 
 const svc = s => SERVICES.find(x => x.slug === s);
 const out = [];
@@ -64,6 +68,60 @@ ${slugs.map(s => { const x = svc(s); return `    <a href="${rel}${x.slug}/"><b>$
 /* ── home ───────────────────────────────────────────────────────────── */
 {
   let main = HOME_MAIN;
+  const rel = '';
+  const featured = LIVE[0];
+  const rest = LIVE.slice(1);
+
+  // hero: the strongest photograph, loaded eagerly
+  main = main.replace(/<div class="plate p-lawn frame hero__plate">[\s\S]*?<\/div>/,
+    photo(rel, 'modern-porcelain-garden-01',
+      'A modern Norfolk garden in large-format grey porcelain, with a horizontal cedar screen, slate-faced raised beds and clipped evergreen planting.',
+      { className: 'hero__shot', eager: true, sizes: '(max-width:900px) 100vw, 50vw' }));
+
+  // featured project, built from data; the before/after toggle goes until
+  // there is a real "before" photograph to put behind it
+  {
+    const a = main.indexOf('<div class="feature frame">');
+    const b = main.indexOf('<div class="projects">');
+    if (a === -1 || b === -1) throw new Error('home: feature or projects block not found');
+    main = main.slice(0, a) + `<div class="feature frame">
+    <div class="feature__media">
+      ${shot(rel, featured, 0, { sizes: '(max-width:860px) 100vw, 55vw' })}
+    </div>
+    <div class="feature__pad">
+      <p class="eyebrow">Featured project</p>
+      <h3 style="font-size:clamp(1.4rem,2.2vw,1.85rem);margin:.7rem 0 1.1rem">${featured.name}</h3>
+      <p style="color:var(--ink-2)">${featured.blurb}</p>
+      <ul class="spec">
+        <li><b>Where</b><span>${featured.location}</span></li>
+        <li><b>Materials</b><span>${featured.materials.join(', ')}</span></li>
+        <li><b>On site</b><span>${featured.weeks}</span></li>
+      </ul>
+      <div style="margin-top:1.5rem">
+        <a class="btn btn--ghost btn--sm" href="projects/${featured.slug}/">See this project ${ICON.arrow}</a>
+      </div>
+    </div>
+  </div>
+
+  ` + main.slice(b);
+  }
+
+  // card grid, generated from the remaining live projects
+  {
+    const a = main.indexOf('<div class="projects">');
+    const b = main.indexOf('<div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-top:');
+    if (a === -1 || b === -1) throw new Error('home: projects grid bounds not found');
+    main = main.slice(0, a) + `<div class="projects">
+${rest.map(p => `    <a class="proj" href="projects/${p.slug}/" style="text-decoration:none">
+      ${shot(rel, p, p.photos.length > 1 ? 1 : 0, { sizes: '(max-width:620px) 100vw, (max-width:1040px) 50vw, 33vw' })}
+      <div class="proj__pad"><h3>${p.name}</h3><p class="proj__loc">${p.location}</p><p>${p.blurb}</p>
+        <div class="chips">${p.materials.slice(0, 2).map(m => `<span class="chip">${m}</span>`).join('')}</div>
+        <span class="more" style="padding-top:.7rem;font-weight:600;color:var(--field)">See the project ${ICON.arrow}</span></div>
+    </a>`).join('\n')}
+  </div>
+
+  ` + main.slice(b);
+  }
   // service tiles become links to their own pages
   const tileRe = /    <article><span class="num">([^<]*)<\/span><h3>([\s\S]*?)<\/h3><p>([\s\S]*?)<\/p><\/article>/g;
   let i = 0;
@@ -136,7 +194,7 @@ for (const s of SERVICES) {
     if (sec.list) parts.push(`<ul>\n${sec.list.map(l => `  <li>${l}</li>`).join('\n')}\n</ul>`);
     return parts.join('\n');
   }).join('\n\n');
-  const projs = PROJECTS.filter(p => p.services.includes(s.slug)).slice(0, 3);
+  const projs = LIVE.filter(p => p.services.includes(s.slug)).slice(0, 3);
   emit(`${s.slug}/index.html`, shell({
     out: `${s.slug}/index.html`, current: `${s.slug}/`, section: 'services/',
     title: s.title,
@@ -151,7 +209,8 @@ ${crumbs(rel, trail)}
     ${ctaPair(rel)}
     ${rating('Five-star reviews on Google and Facebook')}
   </div>
-  ${plate(s.plate, s.photo, 'Photo', 'frame phero__plate')}
+  ${s.heroPhoto ? photo(rel, s.heroPhoto, s.photo, { className: 'phero__shot', eager: true })
+      : plate(s.plate, s.photo, 'Photo', 'frame phero__plate')}
 </div></section>
 
 <section class="section" style="padding-top:0"><div class="wrap two">
@@ -167,7 +226,7 @@ ${projs.length ? `
   <div class="head"><div><p class="eyebrow">Our work</p><h2>${s.nav} we have built</h2></div></div>
   <div class="projects" style="margin-top:0">
 ${projs.map(p => `    <a class="proj" href="${rel}projects/${p.slug}/" style="text-decoration:none">
-      ${plate(p.plate, p.name, 'Photo')}
+      ${shot(rel, p, p.photos.length > 1 ? 1 : 0, { sizes: '(max-width:620px) 100vw, (max-width:1040px) 50vw, 33vw' })}
       <div class="proj__pad"><h3>${p.name}</h3><p class="proj__loc">${p.location}</p><p>${p.blurb}</p>
         <span class="more" style="margin-top:auto;padding-top:.7rem;font-weight:600;color:var(--field)">See the project ${ICON.arrow}</span></div>
     </a>`).join('\n')}
@@ -202,8 +261,8 @@ ${crumbs(rel, trail)}
 </div></section>
 <section class="section" style="padding-top:0"><div class="wrap">
   <div class="projects" style="margin-top:0">
-${PROJECTS.map(p => `    <a class="proj" href="${rel}projects/${p.slug}/" style="text-decoration:none">
-      ${plate(p.plate, p.name, 'Photo')}
+${LIVE.map(p => `    <a class="proj" href="${rel}projects/${p.slug}/" style="text-decoration:none">
+      ${shot(rel, p, p.photos.length > 1 ? 1 : 0, { sizes: '(max-width:620px) 100vw, (max-width:1040px) 50vw, 33vw' })}
       <div class="proj__pad"><h3>${p.name}</h3><p class="proj__loc">${p.location}</p><p>${p.blurb}</p>
         <div class="chips">${p.materials.slice(0, 2).map(m => `<span class="chip">${m}</span>`).join('')}</div>
         <span class="more" style="padding-top:.7rem;font-weight:600;color:var(--field)">See the project ${ICON.arrow}</span></div>
@@ -215,7 +274,7 @@ ${PROJECTS.map(p => `    <a class="proj" href="${rel}projects/${p.slug}/" style=
 }
 
 /* ── project pages ──────────────────────────────────────────────────── */
-for (const p of PROJECTS) {
+for (const p of LIVE) {
   const rel = '../../';
   const trail = [{ label: 'Our work', href: 'projects/' }, { label: p.name }];
   emit(`projects/${p.slug}/index.html`, shell({
@@ -231,7 +290,7 @@ ${crumbs(rel, trail)}
     <p class="lede">${p.blurb}</p>
     ${ctaPair(rel)}
   </div>
-  ${plate(p.plate, p.photos[0], 'Photo', 'frame phero__plate')}
+  ${shot(rel, p, 0, { className: 'phero__shot', eager: true })}
 </div></section>
 
 <section class="section" style="padding-top:0"><div class="wrap two">
@@ -255,7 +314,7 @@ ${p.did.map(d => `  <li>${d}</li>`).join('\n')}
 <section class="section" style="padding-top:0"><div class="wrap">
   <div class="head"><div><p class="eyebrow">Photographs</p><h2>${p.name}</h2></div></div>
   <div class="gallery">
-${p.photos.map((t, i) => `    ${plate(p.plate, t, 'Photo', i === 0 ? 'wide' : '')}`).join('\n')}
+${p.photos.map((n, i) => `    ${photo(rel, n, p.alt, { className: i === 0 ? 'wide' : '', sizes: i === 0 ? '(max-width:620px) 100vw, 80vw' : '(max-width:620px) 100vw, 40vw' })}`).join('\n')}
   </div>
 </div></section>
 ${related(rel, p.services.concat(p.services.length < 3 ? ['garden-design'] : []).slice(0, 3))}
@@ -302,7 +361,7 @@ ${TOWNS.map(t => t === 'Norwich'
 {
   const rel = '../../';
   const trail = [{ label: 'Areas we cover', href: 'areas-we-cover/' }, { label: 'Norwich' }];
-  const norwich = PROJECTS.filter(p => p.location.includes('Norwich'));
+  const norwich = LIVE.filter(p => p.location.includes('Norwich'));
   emit('areas-we-cover/norwich/index.html', shell({
     out: 'areas-we-cover/norwich/index.html', section: 'areas-we-cover/',
     title: 'Garden Design & Landscaping in Norwich | MN Landscapes',
@@ -317,7 +376,7 @@ ${crumbs(rel, trail)}
     ${ctaPair(rel)}
     ${rating('Five-star reviews from Norwich customers')}
   </div>
-  ${plate('p-sandstone', 'A Norwich garden, finished', 'Photo', 'frame phero__plate')}
+  ${photo(rel, 'modern-porcelain-garden-02', 'A modern garden in Norwich, in large-format grey porcelain with slate-faced raised beds and structural evergreen planting.', { className: 'phero__shot', eager: true })}
 </div></section>
 
 <section class="section" style="padding-top:0"><div class="wrap two">
@@ -336,7 +395,7 @@ ${crumbs(rel, trail)}
   <div class="head"><div><p class="eyebrow">Our work</p><h2>Gardens we have built in Norwich</h2></div></div>
   <div class="projects" style="margin-top:0">
 ${norwich.map(p => `    <a class="proj" href="${rel}projects/${p.slug}/" style="text-decoration:none">
-      ${plate(p.plate, p.name, 'Photo')}
+      ${shot(rel, p, p.photos.length > 1 ? 1 : 0, { sizes: '(max-width:620px) 100vw, (max-width:1040px) 50vw, 33vw' })}
       <div class="proj__pad"><h3>${p.name}</h3><p class="proj__loc">${p.location}</p><p>${p.blurb}</p>
         <span class="more" style="margin-top:auto;padding-top:.7rem;font-weight:600;color:var(--field)">See the project ${ICON.arrow}</span></div>
     </a>`).join('\n')}
@@ -375,7 +434,7 @@ ${norwich.map(p => `    <a class="proj" href="${rel}projects/${p.slug}/" style="
       <span>${ICON.tick}Established 1997</span>
     </p>
   </div>
-  ${plate('p-lawn', 'Your best finished garden, in summer', 'Photo', 'frame lhero__plate')}
+  ${photo(rel, 'walled-garden-terrace-01', 'A wood-effect porcelain terrace in a walled garden, with deep planted borders and an oak-framed garden room.', { className: 'lhero__shot', eager: true })}
 </div></section>
 
 <section class="section--tight"><div class="wrap">
@@ -408,5 +467,22 @@ ${urls.map(u => `  <url><loc>${u}</loc></url>`).join('\n')}
   emit('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE.origin}/sitemap.xml\n`);
 }
 
-console.log(`wrote ${out.length} files:`);
-out.forEach(p => console.log('  ' + p));
+/* Remove anything this build produced last time and no longer produces —
+   renaming a project used to leave its old page on disk, live and indexed. */
+const LEDGER = join(ROOT, 'build/generated.json');
+const previous = existsSync(LEDGER) ? JSON.parse(readFileSync(LEDGER, 'utf8')) : [];
+const removed = previous.filter(f => !out.includes(f));
+for (const f of removed) {
+  const full = join(ROOT, f);
+  if (existsSync(full)) rmSync(full);
+  // tidy up the directory if the page was the only thing in it
+  let dir = dirname(full);
+  while (dir !== ROOT.replace(/\/$/, '') && existsSync(dir) && readdirSync(dir).length === 0) {
+    rmSync(dir, { recursive: true });
+    dir = dirname(dir);
+  }
+}
+writeFileSync(LEDGER, JSON.stringify(out.sort(), null, 2));
+
+console.log(`wrote ${out.length} files`);
+if (removed.length) console.log(`removed ${removed.length} stale:\n  ` + removed.join('\n  '));

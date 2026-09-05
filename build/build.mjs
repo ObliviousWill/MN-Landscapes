@@ -20,6 +20,23 @@ const SITE = {
 };
 
 const CSS = read('assets/site.css');
+const PHOTOS = JSON.parse(read('build/photos.json'));
+
+/* A responsive <picture>. WebP first, JPEG fallback, explicit dimensions so
+   nothing shifts as images arrive, and lazy except where told otherwise. */
+function photo(rel, name, alt, { className = '', sizes = '(max-width:900px) 100vw, 50vw', eager = false } = {}) {
+  const p = PHOTOS[name];
+  if (!p) throw new Error(`unknown photo: ${name}`);
+  const widths = Object.keys(p.jpg).map(Number).sort((a, b) => a - b);
+  const set = (map) => widths.map(w => `${rel}${map[w]} ${w}w`).join(', ');
+  const largest = widths[widths.length - 1];
+  return `<picture class="${('shot ' + className).trim()}">
+  <source type="image/webp" srcset="${set(p.webp)}" sizes="${sizes}">
+  <img src="${rel}${p.jpg[largest]}" srcset="${set(p.jpg)}" sizes="${sizes}"
+    width="${p.width}" height="${p.height}" alt="${alt}"
+    loading="${eager ? 'eager' : 'lazy'}" decoding="async"${eager ? ' fetchpriority="high"' : ''}>
+</picture>`;
+}
 /* Content hash in the stylesheet URL. Without it a CSS-only change is
    invisible to anyone holding a cached copy — which is most returning
    visitors, and every phone that has already loaded the site. */
@@ -186,4 +203,4 @@ ${script ? `<script>\n${JS}\n</script>` : ''}
   return html;
 }
 
-export { SITE, CSS, CSS_HASH, JS, HOME_MAIN, ICON, STARS, relOf, link, shell, crumbs, asideCard, header, footer, actionbar, ROOT };
+export { SITE, CSS, CSS_HASH, JS, PHOTOS, photo, HOME_MAIN, ICON, STARS, relOf, link, shell, crumbs, asideCard, header, footer, actionbar, ROOT };
