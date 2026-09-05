@@ -102,6 +102,16 @@ function buildHomeMain({ inline }) {
       `$1\n  <div style="margin-top:1.8rem"><a class="btn btn--onfield" href="areas-we-cover/">See every area we cover ${ICON.arrow}</a></div>`);
   }
 
+  // the design section carries a real drawing rather than a synthetic plan
+  {
+    const re = /<div class="cadbox frame">[\s\S]*?<\/div>/;
+    if (!re.test(main)) throw new Error('home: cadbox not found');
+    main = main.replace(re, `<figure class="cadbox frame" style="margin:0">
+      ${photo(rel, 'design-visual-01', 'A three-dimensional design drawing of a garden, showing the paved terrace, raised beds and grasses, a slatted screen, lawn and a run of timber arches over the path.', { sizes: '(max-width:900px) 100vw, 55vw', inline })}
+      <figcaption style="margin-top:.9rem;font-size:.97rem;color:var(--ink-3)">A design drawn for a Norfolk garden, before any of it was built.</figcaption>
+    </figure>`);
+  }
+
   // hero photograph
   const heroReplaced = main.replace(/<div class="plate p-lawn frame hero__plate">[\s\S]*?<\/div>/,
     photo(rel, 'modern-porcelain-garden-01',
@@ -235,6 +245,11 @@ ${crumbs(rel, trail)}
 <section class="section" style="padding-top:0"><div class="wrap two">
   <article class="prose">
 ${proseBody}
+${s.bodyPhoto ? `
+<figure style="margin:2rem 0 0">
+  ${photo(rel, s.bodyPhoto.name, s.bodyPhoto.alt, { sizes: '(max-width:980px) 100vw, 60vw' })}
+  <figcaption style="margin-top:.8rem;font-size:.97rem;color:var(--ink-3)">${s.bodyPhoto.caption}</figcaption>
+</figure>` : ''}
 
 ${faqBlock(s.faqs)}
   </article>

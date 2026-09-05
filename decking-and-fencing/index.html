@@ -79,6 +79,7 @@
   <li><b>Gates.</b> Made to measure, hung on ironmongery that will still be closing properly in ten years.</li>
 </ul>
 
+
 <h2>Common questions</h2>
 <div class="faq">
   <details open><summary>How high can a fence be?</summary><p>Permitted development normally allows up to two metres, dropping to one metre where the boundary adjoins a road or footpath. We will tell you if your situation needs an application.</p></details>
@@ -107,6 +108,16 @@
     loading="lazy" decoding="async">
 </picture>
       <div class="proj__pad"><h3>New-build garden, one year on</h3><p class="proj__loc">Norfolk</p><p>A bare new-build plot of turf and fence panels, and the same garden a year later — porcelain plank paving the full length, square timber arches, and borders that have filled in.</p>
+        <span class="more" style="margin-top:auto;padding-top:.7rem;font-weight:600;color:var(--field)">See the project <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+    </a>
+    <a class="proj" href="../projects/decked-walkway-and-pond/" style="text-decoration:none">
+      <picture class="shot">
+  <source type="image/webp" srcset="../assets/photos/r/deck-and-pond-01-480.webp 480w, ../assets/photos/r/deck-and-pond-01-720.webp 720w" sizes="(max-width:620px) 100vw, (max-width:1040px) 50vw, 33vw">
+  <img src="../assets/photos/r/deck-and-pond-01-720.jpg" srcset="../assets/photos/r/deck-and-pond-01-480.jpg 480w, ../assets/photos/r/deck-and-pond-01-720.jpg 720w" sizes="(max-width:620px) 100vw, (max-width:1040px) 50vw, 33vw"
+    width="880" height="656" alt="An angular timber deck walkway crossing rough grass to a raised deck with a slatted-screen pergola and seating, beside a natural pond edged with stone."
+    loading="lazy" decoding="async">
+</picture>
+      <div class="proj__pad"><h3>Decked walkway and pond</h3><p class="proj__loc">Norfolk</p><p>An angular deck walkway crossing the garden to a raised seating deck under a slatted pergola, with a natural pond alongside it.</p>
         <span class="more" style="margin-top:auto;padding-top:.7rem;font-weight:600;color:var(--field)">See the project <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
     </a>
     <a class="proj" href="../projects/curved-sandstone-patio/" style="text-decoration:none">
@@ -310,146 +321,6 @@
     ['f-name','f-phone','f-postcode'].forEach(function(i){mark(i,false)});
     document.getElementById('q-name').focus();
   });
-})();
-
-/* ── CAD garden plan (canvas) ────────────────────────────────────────── */
-(function(){
-  var c=document.getElementById('plan'); if(!c||!c.getContext) return;
-  var W=1000,H=560,dpr=Math.min(window.devicePixelRatio||1,2);
-  c.width=W*dpr; c.height=H*dpr;
-  c.style.aspectRatio=W+'/'+H;
-  var g=c.getContext('2d'); g.scale(dpr,dpr);
-  var INK='#2c4032', LINE='rgba(44,64,50,.55)', FAINT='rgba(44,64,50,.20)',
-      OCHRE='#d18c22', MOSS='#5c8455';
-  g.fillStyle='#fbfaf7'; g.fillRect(0,0,W,H);
-
-  /* faint 20mm survey grid */
-  g.strokeStyle='rgba(44,64,50,.045)'; g.lineWidth=1;
-  for(var x=0;x<=W;x+=20){g.beginPath();g.moveTo(x+.5,0);g.lineTo(x+.5,H);g.stroke();}
-  for(var y=0;y<=H;y+=20){g.beginPath();g.moveTo(0,y+.5);g.lineTo(W,y+.5);g.stroke();}
-
-  var L=70,T=54,R=930,B=486;                       /* plot boundary */
-  g.strokeStyle=INK; g.lineWidth=2.2;
-  g.setLineDash([9,5]); g.strokeRect(L,T,R-L,B-T); g.setLineDash([]);
-
-  /* house */
-  g.fillStyle='rgba(44,64,50,.07)';
-  g.fillRect(L,B-96,232,96);
-  g.strokeStyle=INK; g.lineWidth=2.8; g.strokeRect(L,B-96,232,96);
-  g.strokeStyle=LINE; g.lineWidth=1;
-  for(var i=0;i<14;i++){g.beginPath();g.moveTo(L+i*18,B);g.lineTo(L+i*18+18,B-96);g.stroke();}
-  g.fillStyle=INK; g.font='600 21px "Source Sans 3",sans-serif';
-  g.fillText('HOUSE',L+16,B-96+26);
-  g.strokeStyle=OCHRE; g.lineWidth=4;
-  g.beginPath(); g.moveTo(L+186,B-96); g.lineTo(L+228,B-96); g.stroke();
-  g.fillStyle=INK; g.font='400 18px "Source Sans 3",sans-serif';
-  g.fillText('FRENCH DOORS',L+118,B-106);
-
-  /* terrace: porcelain planks */
-  var tx=L+232,ty=B-180,tw=300,th=180;
-  g.fillStyle='rgba(44,64,50,.04)'; g.fillRect(tx,ty,tw,th);
-  g.strokeStyle=INK; g.lineWidth=2.8; g.strokeRect(tx,ty,tw,th);
-  g.strokeStyle=FAINT; g.lineWidth=1;
-  for(var p=1;p<7;p++){g.beginPath();g.moveTo(tx,ty+p*(th/7));g.lineTo(tx+tw,ty+p*(th/7));g.stroke();}
-  for(var q=1;q<4;q++){g.beginPath();g.moveTo(tx+q*(tw/4),ty);g.lineTo(tx+q*(tw/4),ty+th);g.stroke();}
-  g.fillStyle=INK; g.font='600 21px "Source Sans 3",sans-serif';
-  g.fillText('TERRACE',tx+14,ty+26);
-  g.font='400 18px "Source Sans 3",sans-serif'; g.fillStyle='rgba(44,64,50,.7)';
-  g.fillText('porcelain plank, sawn edge',tx+14,ty+44);
-
-  /* stepping path across lawn */
-  g.strokeStyle=INK; g.lineWidth=2.2;
-  for(var s=0;s<6;s++){
-    var sx=tx+tw+26+s*46, sy=ty+96-s*11;
-    g.strokeRect(sx,sy,34,22);
-  }
-
-  /* lawn */
-  g.strokeStyle=MOSS; g.lineWidth=2.2; g.setLineDash([4,4]);
-  g.beginPath(); g.moveTo(tx+tw+8,ty-6);
-  g.bezierCurveTo(700,10+ty,860,ty+40,880,ty+150);
-  g.lineTo(tx+tw+8,ty+th-6); g.closePath(); g.stroke(); g.setLineDash([]);
-  g.fillStyle=MOSS; g.font='600 21px "Source Sans 3",sans-serif';
-  g.fillText('LAWN',tx+tw+150,ty+150);
-
-  /* planting beds + plant symbols */
-  function bed(x0,y0,x1,y1){
-    g.strokeStyle=MOSS; g.lineWidth=2.0;
-    g.beginPath(); g.moveTo(x0,y0);
-    g.bezierCurveTo(x0+(x1-x0)*.35,y0-26,x0+(x1-x0)*.65,y0+26,x1,y1);
-    g.stroke();
-  }
-  bed(L+8,T+150,tx+tw+40,T+92);
-  bed(L+8,T+40,R-14,T+22);
-  var seeds=[[130,120,17],[186,142,12],[250,112,20],[318,146,13],[386,118,16],
-             [452,146,11],[520,112,18],[596,140,13],[664,116,15],[740,142,11],
-             [812,118,17],[876,146,12]];
-  seeds.forEach(function(s,i){
-    g.strokeStyle=(i%3===0)?INK:MOSS; g.lineWidth=1.7;
-    g.beginPath(); g.arc(s[0],s[1],s[2],0,Math.PI*2); g.stroke();
-    if(i%3===0){
-      for(var a=0;a<8;a++){
-        var an=a*Math.PI/4;
-        g.beginPath();
-        g.moveTo(s[0]+Math.cos(an)*s[2]*.35,s[1]+Math.sin(an)*s[2]*.35);
-        g.lineTo(s[0]+Math.cos(an)*s[2],s[1]+Math.sin(an)*s[2]);
-        g.stroke();
-      }
-    }
-  });
-  g.fillStyle=MOSS; g.font='600 20px "Source Sans 3",sans-serif';
-  g.fillText('MIXED BORDER',L+8,T+205);
-
-  /* specimen tree */
-  g.strokeStyle=INK; g.lineWidth=2.2;
-  g.beginPath(); g.arc(690,300,58,0,Math.PI*2); g.stroke();
-  g.setLineDash([3,4]);
-  g.beginPath(); g.arc(690,300,40,0,Math.PI*2); g.stroke(); g.setLineDash([]);
-  g.beginPath(); g.moveTo(682,292); g.lineTo(698,308);
-  g.moveTo(698,292); g.lineTo(682,308); g.stroke();
-  g.fillStyle=INK; g.font='400 18px "Source Sans 3",sans-serif';
-  g.fillText('AMELANCHIER',652,378);
-
-  /* water feature */
-  g.strokeStyle=OCHRE; g.lineWidth=2.8;
-  g.strokeRect(tx+40,ty-64,120,44);
-  g.strokeStyle='rgba(209,140,34,.55)'; g.lineWidth=1;
-  for(var w=0;w<4;w++){
-    g.beginPath(); g.moveTo(tx+48,ty-56+w*10); g.lineTo(tx+152,ty-56+w*10); g.stroke();
-  }
-  g.fillStyle='#a06a12'; g.font='600 18px "Source Sans 3",sans-serif';
-  g.fillText('STILL WATER',tx+44,ty-72);
-
-  /* dimension line */
-  function dim(x0,x1,y,label){
-    g.strokeStyle=INK; g.lineWidth=1;
-    g.beginPath(); g.moveTo(x0,y); g.lineTo(x1,y);
-    g.moveTo(x0,y-6); g.lineTo(x0,y+6);
-    g.moveTo(x1,y-6); g.lineTo(x1,y+6); g.stroke();
-    g.fillStyle='#fbfaf7';
-    var tw2=g.measureText(label).width+14;
-    g.fillRect((x0+x1)/2-tw2/2,y-13,tw2,26);
-    g.fillStyle=INK; g.font='600 20px "Source Sans 3",sans-serif';
-    g.textAlign='center'; g.fillText(label,(x0+x1)/2,y+6); g.textAlign='left';
-  }
-  g.font='600 20px "Source Sans 3",sans-serif';
-  dim(L,R,T-26,'26.4 m');
-  dim(tx,tx+tw,ty+th+18,'8.2 m');
-
-  /* north arrow */
-  g.strokeStyle=INK; g.lineWidth=2.0;
-  g.beginPath(); g.arc(884,86,22,0,Math.PI*2); g.stroke();
-  g.beginPath(); g.moveTo(884,68); g.lineTo(878,98); g.lineTo(884,92);
-  g.lineTo(890,98); g.closePath(); g.fillStyle=INK; g.fill();
-  g.font='600 18px "Source Sans 3",sans-serif'; g.textAlign='center';
-  g.fillText('N',884,60); g.textAlign='left';
-
-  /* title block */
-  g.strokeStyle=INK; g.lineWidth=2.0;
-  g.strokeRect(R-380,H-42,380,30);
-  g.fillStyle=INK; g.font='600 18px "Source Sans 3",sans-serif';
-  g.font='600 17px "Source Sans 3",sans-serif';
-  g.fillText('MN LANDSCAPES  ·  PLAN 04  ·  REV B  ·  1:100',R-368,H-21);
 })();
 
 </script>

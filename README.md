@@ -89,9 +89,9 @@ targets, no hover-only interactions, no carousels, a labelled "Menu" button
 rather than a bare hamburger, before/after as two large buttons rather than a
 drag handle, and a persistent call/quote bar on mobile.
 
-The one technical flourish is the canvas-drawn CAD garden plan in the design
-section. In-house drawings are a genuine differentiator, and no competitor in
-the area shows them.
+The design section carries one of the company's own three-dimensional design
+drawings. In-house drawings are a genuine differentiator, and no competitor
+in the area shows one.
 
 The site is design-and-build throughout: no maintenance offer, and copy
 written as claims about the business rather than about individuals.
@@ -104,17 +104,17 @@ not a strategy — which is why only Norwich has one so far.
 
 ## To take this live
 
-1. **More photography.** Ten photographs are in, driving seven projects,
-   including a genuine before / one-year-later pair. Still on plates: the
-   owner portrait and the driveways service page. Two real projects from the
-   old site stay dormant in `build/content.mjs` awaiting pictures — the
-   decking and veg bed garden, and the lighting and water feature one.
+1. **More photography.** Fifteen photographs are in, driving eleven
+   projects, a genuine before / one-year-later pair, and a real design
+   drawing on the home page and the garden design page. Still on plates:
+   the owner portrait. Two projects from the old site stay dormant in
+   `build/content.mjs` awaiting pictures — the decking and veg bed garden,
+   and the lighting and water feature one.
 
    Sources are 960px wide, taken from the old site, and several are portrait
-   photographs letterboxed into a landscape canvas — the build trims the bars,
-   which leaves those around 495px wide. Fine at the sizes used, but the
-   camera originals would be worth having, especially for the before/after
-   pair and anything meant to run full width.
+   photographs letterboxed into a landscape canvas — the build trims the
+   bars, leaving those around 500px wide. Fine at the sizes used, but the
+   camera originals would be worth having.
 2. **Guide prices.** "What does a patio cost" is the question most visitors
    arrive with, and not answering it is the biggest conversion leak on almost
    every landscaper site. Honest price bands would outperform every other

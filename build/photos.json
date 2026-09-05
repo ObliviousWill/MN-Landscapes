@@ -12,6 +12,19 @@
     },
     "portrait": false
   },
+  "courtyard-louvred-pergola-01": {
+    "width": 878,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/courtyard-louvred-pergola-01-480.jpg",
+      "720": "assets/photos/r/courtyard-louvred-pergola-01-720.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/courtyard-louvred-pergola-01-480.webp",
+      "720": "assets/photos/r/courtyard-louvred-pergola-01-720.webp"
+    },
+    "portrait": false
+  },
   "curved-sandstone-patio-01": {
     "width": 878,
     "height": 656,
@@ -22,6 +35,45 @@
     "webp": {
       "480": "assets/photos/r/curved-sandstone-patio-01-480.webp",
       "720": "assets/photos/r/curved-sandstone-patio-01-720.webp"
+    },
+    "portrait": false
+  },
+  "deck-and-pond-01": {
+    "width": 880,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/deck-and-pond-01-480.jpg",
+      "720": "assets/photos/r/deck-and-pond-01-720.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/deck-and-pond-01-480.webp",
+      "720": "assets/photos/r/deck-and-pond-01-720.webp"
+    },
+    "portrait": false
+  },
+  "design-visual-01": {
+    "width": 908,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/design-visual-01-480.jpg",
+      "720": "assets/photos/r/design-visual-01-720.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/design-visual-01-480.webp",
+      "720": "assets/photos/r/design-visual-01-720.webp"
+    },
+    "portrait": false
+  },
+  "formal-garden-loggia-01": {
+    "width": 879,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/formal-garden-loggia-01-480.jpg",
+      "720": "assets/photos/r/formal-garden-loggia-01-720.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/formal-garden-loggia-01-480.webp",
+      "720": "assets/photos/r/formal-garden-loggia-01-720.webp"
     },
     "portrait": false
   },
@@ -100,6 +152,17 @@
       "720": "assets/photos/r/riven-sandstone-patio-01-720.webp"
     },
     "portrait": false
+  },
+  "school-grounds-01": {
+    "width": 502,
+    "height": 656,
+    "jpg": {
+      "480": "assets/photos/r/school-grounds-01-480.jpg"
+    },
+    "webp": {
+      "480": "assets/photos/r/school-grounds-01-480.webp"
+    },
+    "portrait": true
   },
   "town-garden-sandstone-01": {
     "width": 496,
