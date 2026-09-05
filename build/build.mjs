@@ -65,13 +65,13 @@ const demobar = () => `<div id="demobar"><div class="wrap">
   <button type="button" onclick="document.getElementById('demobar').hidden=true">Hide</button>
 </div></div>`;
 
-const header = (rel, { landing = false } = {}) => {
+const header = (rel, { landing = false, current = '', section = '' } = {}) => {
   if (landing) return `<header><div class="wrap bar">
     <a class="mark" href="${single ? '#top' : rel}"><b>MN&nbsp;LANDSCAPES</b><span>Norfolk &middot; Est. 1997</span></a>
     <a class="tel" href="tel:${SITE.telHref}">${ICON.phone}<span>${SITE.tel}<small>${SITE.hours}</small></span></a>
   </div></header>`;
   const items = NAV.map(n =>
-    `        <li${n.extra ? ' class="navextra"' : ''}><a href="${link(rel, n.href)}">${n.label}</a></li>`).join('\n');
+    `        <li${n.extra ? ' class="navextra"' : ''}><a href="${link(rel, n.href)}"${n.href === current ? ' aria-current="page"' : (n.href === section ? ' aria-current="true"' : '')}>${n.label}</a></li>`).join('\n');
   return `<header>
   <div class="wrap bar">
     <a class="mark" href="${single ? '#top' : (rel || '#top')}"><b>MN&nbsp;LANDSCAPES</b><span>Norfolk &middot; Est. 1997</span></a>
@@ -152,7 +152,7 @@ const asideCard = (rel, heading, body) => `<aside class="aside-card">
 </aside>`;
 
 /* ── page shell ─────────────────────────────────────────────────────── */
-function shell({ out, title, description, body, jsonld = [], bodyClass = '', inlineCss = false, script = true, singleFile = false }) {
+function shell({ out, title, description, body, jsonld = [], bodyClass = '', inlineCss = false, script = true, singleFile = false, current = '', section = '' }) {
   const rel = relOf(out);
   setSingle(singleFile);
   const css = inlineCss
@@ -176,7 +176,7 @@ ${ld}
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
 ${demobar()}
-${header(rel, { landing: bodyClass.includes('landing') })}
+${header(rel, { landing: bodyClass.includes('landing'), current, section })}
 ${body}
 ${footer(rel)}
 ${actionbar(rel)}

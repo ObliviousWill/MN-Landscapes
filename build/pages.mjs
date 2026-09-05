@@ -106,7 +106,7 @@ ${slugs.map(s => { const x = svc(s); return `    <a href="${rel}${x.slug}/"><b>$
   const rel = '../';
   const trail = [{ label: 'What we do' }];
   emit('services/index.html', shell({
-    out: 'services/index.html',
+    out: 'services/index.html', current: 'services/',
     title: 'What We Do | Garden Design & Landscaping | MN Landscapes',
     description: 'Garden design, patios and paving, driveways, walls and steps, decking and fencing, planting, lawns and lighting — design and build across Norfolk.',
     body: `<main id="top">
@@ -138,7 +138,7 @@ for (const s of SERVICES) {
   }).join('\n\n');
   const projs = PROJECTS.filter(p => p.services.includes(s.slug)).slice(0, 3);
   emit(`${s.slug}/index.html`, shell({
-    out: `${s.slug}/index.html`,
+    out: `${s.slug}/index.html`, current: `${s.slug}/`, section: 'services/',
     title: s.title,
     description: s.description,
     body: `<main id="top">
@@ -189,7 +189,7 @@ ${related(rel, s.related)}
   const rel = '../';
   const trail = [{ label: 'Our work' }];
   emit('projects/index.html', shell({
-    out: 'projects/index.html',
+    out: 'projects/index.html', current: 'projects/',
     title: 'Our Projects | Garden Design & Landscaping in Norfolk',
     description: 'Gardens we have designed and built around Norwich and Norfolk — patios, terraces, decking, planting and lighting, with the materials and timescales for each.',
     body: `<main id="top">
@@ -219,7 +219,7 @@ for (const p of PROJECTS) {
   const rel = '../../';
   const trail = [{ label: 'Our work', href: 'projects/' }, { label: p.name }];
   emit(`projects/${p.slug}/index.html`, shell({
-    out: `projects/${p.slug}/index.html`,
+    out: `projects/${p.slug}/index.html`, section: 'projects/',
     title: `${p.name}, ${p.location.split(',')[0]} | MN Landscapes`,
     description: p.blurb,
     body: `<main id="top">
@@ -269,7 +269,7 @@ ${related(rel, p.services.concat(p.services.length < 3 ? ['garden-design'] : [])
   const rel = '../';
   const trail = [{ label: 'Areas we cover' }];
   emit('areas-we-cover/index.html', shell({
-    out: 'areas-we-cover/index.html',
+    out: 'areas-we-cover/index.html', current: 'areas-we-cover/',
     title: 'Areas We Cover | Norfolk & North Suffolk | MN Landscapes',
     description: 'Based on the rural edge of Wymondham, we design and build gardens across Norfolk and into north Suffolk — Norwich, Attleborough, Diss, Dereham and the villages between.',
     body: `<main id="top">
@@ -304,7 +304,7 @@ ${TOWNS.map(t => t === 'Norwich'
   const trail = [{ label: 'Areas we cover', href: 'areas-we-cover/' }, { label: 'Norwich' }];
   const norwich = PROJECTS.filter(p => p.location.includes('Norwich'));
   emit('areas-we-cover/norwich/index.html', shell({
-    out: 'areas-we-cover/norwich/index.html',
+    out: 'areas-we-cover/norwich/index.html', section: 'areas-we-cover/',
     title: 'Garden Design & Landscaping in Norwich | MN Landscapes',
     description: 'Garden design and landscaping in Norwich — city gardens, terraces and courtyards, plus the suburbs. Free site visit and a fixed written price.',
     body: `<main id="top">

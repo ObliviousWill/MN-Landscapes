@@ -492,19 +492,62 @@
   <a class="quo" href="free-quote/">Get a free quote</a>
 </div>
 <script>
-/* ── Mobile menu ─────────────────────────────────────────────────────── */
+/* ── Mobile menu ─────────────────────────────────────────────────────
+   Full-screen panel. Closed, it is visibility:hidden, so it is out of the
+   tab order and the accessibility tree. Open, focus moves into it, Tab is
+   trapped between the close button and the last link, Escape closes, and
+   focus returns to the button. */
 (function(){
   var btn=document.getElementById('menubtn'),nav=document.getElementById('nav');
   if(!btn||!nav) return;
+  var MQ=window.matchMedia('(max-width:1150px)');
+
+  function items(){
+    return [btn].concat(Array.prototype.slice.call(nav.querySelectorAll('a')));
+  }
+  function isOpen(){ return nav.dataset.open==='true'; }
+
   function set(open){
     nav.dataset.open=open?'true':'false';
     btn.setAttribute('aria-expanded',open?'true':'false');
     btn.textContent=open?'Close':'Menu';
+    btn.setAttribute('aria-label',open?'Close menu':'Open menu');
+    document.documentElement.style.overflow=open?'hidden':'';
     document.body.style.overflow=open?'hidden':'';
+    if(open){
+      /* the header sits above the panel and its height changes with scroll,
+         so clear it by measurement rather than a guessed padding */
+      var hdr=document.querySelector('header');
+      if(hdr) nav.style.paddingTop=Math.round(hdr.getBoundingClientRect().bottom+28)+'px';
+      var first=nav.querySelector('a');
+      if(first) first.focus();
+    }else{
+      if(nav.contains(document.activeElement)) btn.focus();
+    }
   }
-  btn.addEventListener('click',function(){set(nav.dataset.open!=='true')});
-  nav.addEventListener('click',function(e){if(e.target.tagName==='A')set(false)});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+
+  btn.addEventListener('click',function(){ set(!isOpen()); });
+
+  /* a link closes the panel; the browser handles the jump or the navigation */
+  nav.addEventListener('click',function(e){
+    if(e.target.closest('a')) set(false);
+  });
+
+  document.addEventListener('keydown',function(e){
+    if(!isOpen()) return;
+    if(e.key==='Escape'){ e.preventDefault(); set(false); return; }
+    if(e.key!=='Tab') return;
+    var list=items(), i=list.indexOf(document.activeElement);
+    if(i===-1) return;
+    var next=e.shiftKey ? (i===0?list.length-1:i-1) : (i===list.length-1?0:i+1);
+    e.preventDefault();
+    list[next].focus();
+  });
+
+  /* resizing past the breakpoint must not leave the page scroll-locked */
+  var onChange=function(){ if(!MQ.matches && isOpen()) set(false); };
+  if(MQ.addEventListener) MQ.addEventListener('change',onChange);
+  else if(MQ.addListener) MQ.addListener(onChange);
 })();
 
 /* ── Before / after ──────────────────────────────────────────────────── */
