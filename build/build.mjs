@@ -65,11 +65,6 @@ const link = (rel, href) => {
   return href.startsWith('#') ? `${rel || './'}${href}` : `${rel}${href}`;
 };
 
-const demobar = () => `<div id="demobar"><div class="wrap">
-  <p style="margin:0"><b>Concept build.</b> Textured plates mark where the project photographs go.<span class="long"> Every other word, promise and detail is real.</span></p>
-  <button type="button" onclick="document.getElementById('demobar').hidden=true">Hide</button>
-</div></div>`;
-
 const header = (rel, { landing = false, current = '', section = '' } = {}) => {
   if (landing) return `<header><div class="wrap bar">
     <a class="mark" href="${single ? '#top' : rel}"><b>MN&nbsp;LANDSCAPES</b><span>Norfolk &middot; Est. 1997</span></a>
@@ -180,7 +175,6 @@ ${css}
 ${ld}
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
-${demobar()}
 ${header(rel, { landing: bodyClass.includes('landing'), current, section })}
 ${body}
 ${footer(rel)}
@@ -193,4 +187,4 @@ ${script ? `<script>\n${JS}\n</script>` : ''}
   return html;
 }
 
-export { SITE, CSS, CSS_HASH, JS, HOME_MAIN, ICON, STARS, relOf, link, shell, crumbs, asideCard, demobar, header, footer, actionbar, ROOT };
+export { SITE, CSS, CSS_HASH, JS, HOME_MAIN, ICON, STARS, relOf, link, shell, crumbs, asideCard, header, footer, actionbar, ROOT };

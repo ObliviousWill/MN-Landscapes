@@ -85,8 +85,7 @@ not a strategy — which is why only Norwich has one so far.
 ## To take this live
 
 1. **Photography.** Every image slot is a textured "material plate" tagged
-   with what belongs there (`Photo 01` … `Photo 10`, including a portrait of
-   the owner). Swap each `<div class="plate …">` for an `<img>`; the aspect
+   with what belongs there, including a portrait of the owner. Swap each `<div class="plate …">` for an `<img>`; the aspect
    ratios are already set. This is the most important outstanding item — on a
    landscaping site the photographs *are* the product.
 2. **Guide prices.** "What does a patio cost" is the question most visitors

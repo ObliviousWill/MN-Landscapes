@@ -84,20 +84,6 @@ a{color:inherit}
   margin-top:1.2rem;font-size:1rem;color:var(--ink-2)}
 .stars{display:flex;gap:.14rem;color:var(--marigold);flex:0 0 auto}
 
-/* ── Concept strip ──────────────────────────────────────────────────── */
-#demobar{background:var(--sage-2);color:var(--ink-2);font-size:.9rem;
-  line-height:1.5;border-bottom:1px solid var(--line)}
-#demobar .wrap{display:flex;gap:1rem;align-items:center;
-  justify-content:space-between;padding-top:.6rem;padding-bottom:.6rem}
-#demobar b{color:var(--ink);font-weight:600}
-#demobar button{background:var(--card);border:1px solid var(--line-2);color:inherit;
-  font:inherit;border-radius:var(--r-xs);padding:.3rem .8rem;cursor:pointer;flex:0 0 auto}
-#demobar button:hover{border-color:var(--field)}
-@media (max-width:760px){
-  #demobar{font-size:.82rem}
-  #demobar .long{display:none}
-}
-
 /* ── Header ─────────────────────────────────────────────────────────── */
 header{position:sticky;top:0;z-index:60;background:var(--paper);
   border-bottom:1px solid var(--line)}
@@ -550,10 +536,6 @@ body.landing .lhero__plate{min-height:clamp(340px,36vw,470px);box-shadow:var(--s
 
 </head>
 <body>
-<div id="demobar"><div class="wrap">
-  <p style="margin:0"><b>Concept build.</b> Textured plates mark where the project photographs go.<span class="long"> Every other word, promise and detail is real.</span></p>
-  <button type="button" onclick="document.getElementById('demobar').hidden=true">Hide</button>
-</div></div>
 <header>
   <div class="wrap bar">
     <a class="mark" href="#top"><b>MN&nbsp;LANDSCAPES</b><span>Norfolk &middot; Est. 1997</span></a>
