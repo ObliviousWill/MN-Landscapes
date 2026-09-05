@@ -5,6 +5,7 @@
    or from a subpath such as /MN-Landscapes/. */
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { createHash } from 'node:crypto';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const read = f => readFileSync(join(ROOT, f), 'utf8');
@@ -19,6 +20,10 @@ const SITE = {
 };
 
 const CSS = read('assets/site.css');
+/* Content hash in the stylesheet URL. Without it a CSS-only change is
+   invisible to anyone holding a cached copy — which is most returning
+   visitors, and every phone that has already loaded the site. */
+const CSS_HASH = createHash('sha1').update(CSS).digest('hex').slice(0, 10);
 const JS  = read('build/parts/site.js');
 const HOME_MAIN = read('build/parts/home-main.html');
 
@@ -157,7 +162,7 @@ function shell({ out, title, description, body, jsonld = [], bodyClass = '', inl
   setSingle(singleFile);
   const css = inlineCss
     ? `<style>\n${CSS}\n</style>`
-    : `<link rel="stylesheet" href="${rel}assets/site.css">`;
+    : `<link rel="stylesheet" href="${rel}assets/site.css?v=${CSS_HASH}">`;
   const ld = jsonld.length
     ? jsonld.map(o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n')
     : '';
@@ -188,4 +193,4 @@ ${script ? `<script>\n${JS}\n</script>` : ''}
   return html;
 }
 
-export { SITE, CSS, JS, HOME_MAIN, ICON, STARS, relOf, link, shell, crumbs, asideCard, demobar, header, footer, actionbar, ROOT };
+export { SITE, CSS, CSS_HASH, JS, HOME_MAIN, ICON, STARS, relOf, link, shell, crumbs, asideCard, demobar, header, footer, actionbar, ROOT };

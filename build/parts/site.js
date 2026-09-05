@@ -13,8 +13,15 @@
   }
   function isOpen(){ return nav.dataset.open==='true'; }
 
+  /* Belt and braces: the hidden attribute carries the UA's own display:none,
+     so the closed panel stays unrendered even if the stylesheet is stale or
+     fails to load. Above the breakpoint the nav is an ordinary inline list
+     and must never carry it. */
+  function syncHidden(){ nav.hidden = MQ.matches ? !isOpen() : false; }
+
   function set(open){
     nav.dataset.open=open?'true':'false';
+    if(open) nav.hidden=false;
     btn.setAttribute('aria-expanded',open?'true':'false');
     btn.textContent=open?'Close':'Menu';
     btn.setAttribute('aria-label',open?'Close menu':'Open menu');
@@ -29,6 +36,7 @@
       if(first) first.focus();
     }else{
       if(nav.contains(document.activeElement)) btn.focus();
+      syncHidden();
     }
   }
 
@@ -51,9 +59,10 @@
   });
 
   /* resizing past the breakpoint must not leave the page scroll-locked */
-  var onChange=function(){ if(!MQ.matches && isOpen()) set(false); };
+  var onChange=function(){ if(!MQ.matches && isOpen()) set(false); syncHidden(); };
   if(MQ.addEventListener) MQ.addEventListener('change',onChange);
   else if(MQ.addListener) MQ.addListener(onChange);
+  syncHidden();
 })();
 
 /* ── Before / after ──────────────────────────────────────────────────── */

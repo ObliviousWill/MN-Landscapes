@@ -116,6 +116,7 @@ nav a:hover{color:var(--field);border-bottom-color:var(--leaf)}
   nav{display:none;position:fixed;inset:0;background:var(--paper);
     padding:5.5rem var(--pad) 2.5rem;overflow-y:auto;z-index:55;
     overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+  nav[hidden]{display:none}
   nav[data-open="true"]{display:block;animation:navIn .26s ease both}
   @keyframes navIn{from{transform:translateY(-100%)}to{transform:none}}
   nav ul{flex-direction:column;gap:0}

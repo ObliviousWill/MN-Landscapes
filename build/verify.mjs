@@ -15,7 +15,7 @@ for (const p of pages) {
   for (const m of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
     const h = m[1];
     if (/^(https?:|tel:|mailto:|#|data:)/.test(h)) continue;
-    const target = resolve(join(ROOT, dirname(p)), h.split('#')[0]);
+    const target = resolve(join(ROOT, dirname(p)), h.split('#')[0].split('?')[0]);
     const candidates = [target, join(target, 'index.html')];
     if (!candidates.some(existsSync)) broken.push(`BROKEN LINK in ${p}: ${h}`);
   }
