@@ -511,6 +511,22 @@ export const PROJECTS = [
   },
 ];
 
+/* The home page hero carousel. Three slides, cycling automatically.
+   No single project has three photographs yet, so these name the garden
+   each shot belongs to; swap them for three of one project the moment
+   there are three. */
+export const HERO_SLIDES = [
+  { photo: 'walled-parterre-01', project: 'walled-garden-box-parterre',
+    caption: 'Walled garden with a box parterre',
+    alt: 'A formal walled garden with a pale limestone terrace, clipped box parterre, standard trees and a still water feature set into the lawn.' },
+  { photo: 'walled-parterre-02', project: 'walled-garden-box-parterre',
+    caption: 'The same garden, looking back',
+    alt: 'The box parterre from the other end, with a brick herringbone path, standard roses and the still water feature level with the grass.' },
+  { photo: 'deck-and-pond-01', project: 'decked-walkway-and-pond',
+    caption: 'Decked walkway and pond',
+    alt: 'An angular timber deck walkway crossing rough grass to a raised seating deck under a slatted pergola, beside a natural pond.' },
+];
+
 export const TOWNS = ['Norwich','Wymondham','Attleborough','Hethersett','Cringleford','Costessey',
   'Taverham','Drayton','Hingham','Mulbarton','Poringland','Framingham Earl','Brooke','Loddon',
   'Long Stratton','Diss','Harleston','Dereham','Watton','Thetford','Aylsham','Wroxham','Bungay','Beccles'];

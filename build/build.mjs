@@ -230,4 +230,34 @@ function video(rel, { className = '', inline = false } = {}) {
 </video>`;
 }
 
-export { SITE, CSS, CSS_HASH, JS, PHOTOS, photo, video, HOME_MAIN, ICON, STARS, relOf, link, shell, crumbs, asideCard, header, footer, actionbar, ROOT };
+/* Auto-cycling hero carousel. Crossfades rather than slides, so there is no
+   layout shift and no horizontal scroll to fight. It pauses on hover, on
+   focus, when the tab is hidden, and entirely under prefers-reduced-motion;
+   dots give manual control, and a pause button satisfies WCAG 2.2.2, which
+   requires a way to stop anything that moves by itself for more than five
+   seconds. */
+function carousel(rel, slides, { inline = false } = {}) {
+  const items = slides.map((s, i) => `    <li class="carousel__slide"${i === 0 ? ' data-active="true"' : ' aria-hidden="true"'}>
+      ${photo(rel, s.photo, s.alt, { className: 'carousel__shot', eager: i === 0, inline, sizes: '(max-width:900px) 100vw, 50vw' })}
+      <p class="carousel__caption">${s.caption}</p>
+    </li>`).join('\n');
+  const dots = slides.map((s, i) =>
+    `    <button type="button" class="carousel__dot" data-go="${i}"${i === 0 ? ' aria-current="true"' : ''}
+      aria-label="Show ${s.caption.replace(/"/g, '&quot;')}"></button>`).join('\n');
+  return `<div class="carousel hero__shot" id="herocarousel" aria-roledescription="carousel"
+  aria-label="Recent MN Landscapes projects">
+  <ul class="carousel__track">
+${items}
+  </ul>
+  <div class="carousel__controls">
+    <div class="carousel__dots" role="group" aria-label="Choose a picture">
+${dots}
+    </div>
+    <button type="button" class="carousel__pause" data-pause aria-label="Pause the pictures">
+      <span class="carousel__icon" aria-hidden="true"></span>
+    </button>
+  </div>
+</div>`;
+}
+
+export { SITE, CSS, CSS_HASH, JS, PHOTOS, photo, video, carousel, HOME_MAIN, ICON, STARS, relOf, link, shell, crumbs, asideCard, header, footer, actionbar, ROOT };

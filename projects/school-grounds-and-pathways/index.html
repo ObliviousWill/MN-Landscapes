@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://www.mnlandscapes.co.uk/projects/school-grounds-and-pathways/">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,400..700;1,400..600&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
-<link rel="stylesheet" href="../../assets/site.css?v=157c494c1f">
+<link rel="stylesheet" href="../../assets/site.css?v=1d580b974b">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.mnlandscapes.co.uk/"},{"@type":"ListItem","position":2,"name":"Our work","item":"https://www.mnlandscapes.co.uk/projects/"},{"@type":"ListItem","position":3,"name":"School grounds and pathways"}]}</script>
 </head>
 <body>
@@ -283,6 +283,64 @@
     ['f-name','f-phone','f-postcode'].forEach(function(i){mark(i,false)});
     document.getElementById('q-name').focus();
   });
+})();
+
+/* ── Hero carousel ───────────────────────────────────────────────────
+   Crossfades every 6 seconds. Stops on hover, on keyboard focus, when the
+   tab is hidden, when the pause button is pressed, and never starts at all
+   if the visitor has asked for reduced motion. */
+(function(){
+  var root=document.getElementById('herocarousel');
+  if(!root) return;
+  var slides=[].slice.call(root.querySelectorAll('.carousel__slide'));
+  var dots=[].slice.call(root.querySelectorAll('[data-go]'));
+  var pauseBtn=root.querySelector('[data-pause]');
+  if(slides.length<2) return;
+
+  var DELAY=6000, i=0, timer=null, stopped=false;
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function show(n){
+    i=(n+slides.length)%slides.length;
+    slides.forEach(function(s,k){
+      var on=k===i;
+      s.dataset.active=on?'true':'false';
+      if(on) s.removeAttribute('aria-hidden'); else s.setAttribute('aria-hidden','true');
+    });
+    dots.forEach(function(d,k){
+      if(k===i) d.setAttribute('aria-current','true'); else d.removeAttribute('aria-current');
+    });
+  }
+  function tick(){ show(i+1); }
+  function start(){
+    if(timer||stopped||reduced.matches||document.hidden) return;
+    timer=setInterval(tick,DELAY);
+  }
+  function halt(){ if(timer){ clearInterval(timer); timer=null; } }
+
+  dots.forEach(function(d){
+    d.addEventListener('click',function(){ show(+d.dataset.go); halt(); start(); });
+  });
+
+  pauseBtn.addEventListener('click',function(){
+    stopped=!stopped;
+    pauseBtn.dataset.paused=stopped?'true':'false';
+    pauseBtn.setAttribute('aria-label',stopped?'Play the pictures':'Pause the pictures');
+    if(stopped) halt(); else start();
+  });
+
+  root.addEventListener('mouseenter',halt);
+  root.addEventListener('mouseleave',start);
+  root.addEventListener('focusin',halt);
+  root.addEventListener('focusout',start);
+  document.addEventListener('visibilitychange',function(){ document.hidden?halt():start(); });
+
+  if(reduced.matches){
+    stopped=true;
+    pauseBtn.dataset.paused='true';
+    pauseBtn.setAttribute('aria-label','Play the pictures');
+  }
+  start();
 })();
 
 </script>

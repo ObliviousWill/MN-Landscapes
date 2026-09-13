@@ -1,7 +1,7 @@
 import { writeFileSync, mkdirSync, readFileSync, existsSync, rmSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { SITE, HOME_MAIN, ICON, STARS, relOf, link, shell, crumbs, asideCard, photo, video, ROOT } from './build.mjs';
-import { SERVICES, PROJECTS, TOWNS } from './content.mjs';
+import { SITE, HOME_MAIN, ICON, STARS, relOf, link, shell, crumbs, asideCard, photo, video, carousel, ROOT } from './build.mjs';
+import { SERVICES, PROJECTS, TOWNS, HERO_SLIDES } from './content.mjs';
 
 /* Only projects with photographs are built. */
 const LIVE = PROJECTS.filter(p => p.photos && p.photos.length);
@@ -121,9 +121,7 @@ function buildHomeMain({ inline }) {
 
   // hero photograph
   const heroReplaced = main.replace(/<div class="plate p-lawn frame hero__plate">[\s\S]*?<\/div>/,
-    photo(rel, 'walled-parterre-01',
-      'A formal walled garden with a pale limestone terrace, clipped box parterre, standard trees and a still water feature set into the lawn.',
-      { className: 'hero__shot', eager: true, sizes: '(max-width:900px) 100vw, 50vw', inline }));
+    carousel(rel, HERO_SLIDES, { inline }));
   if (heroReplaced === main) throw new Error('home: hero plate not replaced');
   main = heroReplaced;
 

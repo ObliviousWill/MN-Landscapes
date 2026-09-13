@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://www.mnlandscapes.co.uk/">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,400..700;1,400..600&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
-<link rel="stylesheet" href="assets/site.css?v=157c494c1f">
+<link rel="stylesheet" href="assets/site.css?v=1d580b974b">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"LandscapingBusiness","name":"MN Landscapes","telephone":"07387 085952","email":"chris@mnlandscapes.com","foundingDate":"1997","url":"https://www.mnlandscapes.co.uk/","priceRange":"££","address":{"@type":"PostalAddress","addressLocality":"Wymondham","addressRegion":"Norfolk","addressCountry":"GB"},"areaServed":[{"@type":"City","name":"Norwich"},{"@type":"City","name":"Wymondham"},{"@type":"City","name":"Attleborough"},{"@type":"City","name":"Hethersett"},{"@type":"City","name":"Cringleford"},{"@type":"City","name":"Costessey"},{"@type":"City","name":"Taverham"},{"@type":"City","name":"Drayton"},{"@type":"City","name":"Hingham"},{"@type":"City","name":"Mulbarton"},{"@type":"City","name":"Poringland"},{"@type":"City","name":"Framingham Earl"},{"@type":"City","name":"Brooke"},{"@type":"City","name":"Loddon"},{"@type":"City","name":"Long Stratton"},{"@type":"City","name":"Diss"},{"@type":"City","name":"Harleston"},{"@type":"City","name":"Dereham"},{"@type":"City","name":"Watton"},{"@type":"City","name":"Thetford"},{"@type":"City","name":"Aylsham"},{"@type":"City","name":"Wroxham"},{"@type":"City","name":"Bungay"},{"@type":"City","name":"Beccles"}],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"17:00"}]}</script>
 </head>
 <body>
@@ -55,12 +55,51 @@
       <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Fully insured</span>
     </p>
   </div>
-  <picture class="shot hero__shot">
+  <div class="carousel hero__shot" id="herocarousel" aria-roledescription="carousel"
+  aria-label="Recent MN Landscapes projects">
+  <ul class="carousel__track">
+    <li class="carousel__slide" data-active="true">
+      <picture class="shot carousel__shot">
   <source type="image/webp" srcset="assets/photos/r/walled-parterre-01-480.webp 480w, assets/photos/r/walled-parterre-01-720.webp 720w" sizes="(max-width:900px) 100vw, 50vw">
   <img src="assets/photos/r/walled-parterre-01-720.jpg" srcset="assets/photos/r/walled-parterre-01-480.jpg 480w, assets/photos/r/walled-parterre-01-720.jpg 720w" sizes="(max-width:900px) 100vw, 50vw"
     width="878" height="656" alt="A formal walled garden with a pale limestone terrace, clipped box parterre, standard trees and a still water feature set into the lawn."
     loading="eager" decoding="async" fetchpriority="high">
 </picture>
+      <p class="carousel__caption">Walled garden with a box parterre</p>
+    </li>
+    <li class="carousel__slide" aria-hidden="true">
+      <picture class="shot carousel__shot">
+  <source type="image/webp" srcset="assets/photos/r/walled-parterre-02-480.webp 480w" sizes="(max-width:900px) 100vw, 50vw">
+  <img src="assets/photos/r/walled-parterre-02-480.jpg" srcset="assets/photos/r/walled-parterre-02-480.jpg 480w" sizes="(max-width:900px) 100vw, 50vw"
+    width="496" height="656" alt="The box parterre from the other end, with a brick herringbone path, standard roses and the still water feature level with the grass."
+    loading="lazy" decoding="async">
+</picture>
+      <p class="carousel__caption">The same garden, looking back</p>
+    </li>
+    <li class="carousel__slide" aria-hidden="true">
+      <picture class="shot carousel__shot">
+  <source type="image/webp" srcset="assets/photos/r/deck-and-pond-01-480.webp 480w, assets/photos/r/deck-and-pond-01-720.webp 720w" sizes="(max-width:900px) 100vw, 50vw">
+  <img src="assets/photos/r/deck-and-pond-01-720.jpg" srcset="assets/photos/r/deck-and-pond-01-480.jpg 480w, assets/photos/r/deck-and-pond-01-720.jpg 720w" sizes="(max-width:900px) 100vw, 50vw"
+    width="880" height="656" alt="An angular timber deck walkway crossing rough grass to a raised seating deck under a slatted pergola, beside a natural pond."
+    loading="lazy" decoding="async">
+</picture>
+      <p class="carousel__caption">Decked walkway and pond</p>
+    </li>
+  </ul>
+  <div class="carousel__controls">
+    <div class="carousel__dots" role="group" aria-label="Choose a picture">
+    <button type="button" class="carousel__dot" data-go="0" aria-current="true"
+      aria-label="Show Walled garden with a box parterre"></button>
+    <button type="button" class="carousel__dot" data-go="1"
+      aria-label="Show The same garden, looking back"></button>
+    <button type="button" class="carousel__dot" data-go="2"
+      aria-label="Show Decked walkway and pond"></button>
+    </div>
+    <button type="button" class="carousel__pause" data-pause aria-label="Pause the pictures">
+      <span class="carousel__icon" aria-hidden="true"></span>
+    </button>
+  </div>
+</div>
 </div></section>
 
 <!-- ── Facts ────────────────────────────────────────────────────────── -->
@@ -638,6 +677,64 @@
     ['f-name','f-phone','f-postcode'].forEach(function(i){mark(i,false)});
     document.getElementById('q-name').focus();
   });
+})();
+
+/* ── Hero carousel ───────────────────────────────────────────────────
+   Crossfades every 6 seconds. Stops on hover, on keyboard focus, when the
+   tab is hidden, when the pause button is pressed, and never starts at all
+   if the visitor has asked for reduced motion. */
+(function(){
+  var root=document.getElementById('herocarousel');
+  if(!root) return;
+  var slides=[].slice.call(root.querySelectorAll('.carousel__slide'));
+  var dots=[].slice.call(root.querySelectorAll('[data-go]'));
+  var pauseBtn=root.querySelector('[data-pause]');
+  if(slides.length<2) return;
+
+  var DELAY=6000, i=0, timer=null, stopped=false;
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function show(n){
+    i=(n+slides.length)%slides.length;
+    slides.forEach(function(s,k){
+      var on=k===i;
+      s.dataset.active=on?'true':'false';
+      if(on) s.removeAttribute('aria-hidden'); else s.setAttribute('aria-hidden','true');
+    });
+    dots.forEach(function(d,k){
+      if(k===i) d.setAttribute('aria-current','true'); else d.removeAttribute('aria-current');
+    });
+  }
+  function tick(){ show(i+1); }
+  function start(){
+    if(timer||stopped||reduced.matches||document.hidden) return;
+    timer=setInterval(tick,DELAY);
+  }
+  function halt(){ if(timer){ clearInterval(timer); timer=null; } }
+
+  dots.forEach(function(d){
+    d.addEventListener('click',function(){ show(+d.dataset.go); halt(); start(); });
+  });
+
+  pauseBtn.addEventListener('click',function(){
+    stopped=!stopped;
+    pauseBtn.dataset.paused=stopped?'true':'false';
+    pauseBtn.setAttribute('aria-label',stopped?'Play the pictures':'Pause the pictures');
+    if(stopped) halt(); else start();
+  });
+
+  root.addEventListener('mouseenter',halt);
+  root.addEventListener('mouseleave',start);
+  root.addEventListener('focusin',halt);
+  root.addEventListener('focusout',start);
+  document.addEventListener('visibilitychange',function(){ document.hidden?halt():start(); });
+
+  if(reduced.matches){
+    stopped=true;
+    pauseBtn.dataset.paused='true';
+    pauseBtn.setAttribute('aria-label','Play the pictures');
+  }
+  start();
 })();
 
 </script>
